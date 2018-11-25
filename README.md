@@ -8,7 +8,7 @@ A站评论补全计划官网
 ### 所需环境
 - Node v8.9.0
 - npm v4.6.1
-
+- @angular/cli@7.0.6
 ## 相关资源
 [AcFun-CIP-Observer](https://github.com/SimonTart/AcFun-CIP-Observer)
 

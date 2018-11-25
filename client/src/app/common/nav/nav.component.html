@@ -1,0 +1,11 @@
+<ul class="nav-list">
+    <li
+        *ngFor="let nav of navList"
+        class="nav-list-item"
+        [ngClass]="{
+            active: nav.activeReg ? nav.activeReg.test(router.url) : nav.link === router.url
+        }"
+    >
+        <a [routerLink]="nav.link">{{nav.name}}</a>
+    </li>
+</ul>
