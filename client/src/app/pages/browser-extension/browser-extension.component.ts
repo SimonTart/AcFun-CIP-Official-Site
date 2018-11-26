@@ -8,7 +8,7 @@ import BasePage from "../BasePage";
 })
 export class BrowserExtensionComponent extends BasePage implements OnInit {
 
-    backgorundImageUrl = 'assets/images/pages/register_login.jpg';
+    backgorundImageUrl = 'assets/images/pages/browser-extension.jpg';
     title = 'A站评论补全计划插件（AcFun Comment Instrumentality Project Extension）';
 
     ngOnInit() {
