@@ -10,7 +10,7 @@ export class NavComponent implements OnInit {
     navList = [
         {name: '插件下载', link: '/browser-extension'},
         {name: '评论查询', link: '/comment-query'},
-        {name: '登录/注册', link: '/regist', activeReg: /\/(regist|login)/},
+        {name: '登录/注册', link: '/register', activeReg: /\/(register|login|forget-password)/},
     ];
 
     constructor(public router: Router) {
