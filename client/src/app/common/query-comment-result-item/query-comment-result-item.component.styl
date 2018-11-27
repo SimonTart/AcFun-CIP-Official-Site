@@ -1,0 +1,68 @@
+.content-item
+    margin-bottom 8px
+
+    &.open
+        .content-item-header
+            &-main
+                height auto
+
+                &-title
+                    white-space pre-wrap
+
+            &-more
+                display flex
+
+        .content-item-body
+            display block
+
+    &-header
+        &-main
+            background #fff
+            display flex
+            padding 12px 16px
+            font-size 14px
+            color #333333
+            overflow hidden
+            cursor pointer
+
+            &-title
+                flex 1 1 0
+                overflow hidden
+                text-overflow ellipsis
+                white-space nowrap
+                word-break break-all
+
+            .arrow-icon
+                flex 0 0 auto
+                margin-left 16px
+
+        &-more
+            display none
+            background #fff
+            padding 0 16px 12px 16px
+            align-items center
+            justify-content space-between
+            font-size 12px
+            cursor pointer
+
+            .source-link
+                color #FD4C5B
+                text-decoration none
+
+                &:hover
+                    text-decoration underline
+
+                > img
+                    margin-right 4px
+                    vertical-align middle
+                > span
+                    vertical-align middle
+
+            .content-publish-date
+                font-size 12px
+                color #AAAAAA
+
+    &-body
+        display none
+        background: rgba(255,255,255,0.36);
+        padding 24px 42px 24px 24px

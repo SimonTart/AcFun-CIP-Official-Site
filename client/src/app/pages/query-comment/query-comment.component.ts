@@ -10,6 +10,12 @@ export class QueryCommentComponent extends BasePage implements OnInit {
     backgorundImageUrl = 'assets/images/pages/query_comment.jpg';
     title = 'A站评论补全计划-评论查询(AcFun Comment Instrumentality Project Query Comment)';
 
+    private hasResult: boolean = false;
+
+    toggle() {
+        this.hasResult = !this.hasResult;
+    }
+
     ngOnInit() {
     }
 

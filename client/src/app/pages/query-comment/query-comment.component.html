@@ -1,36 +1,41 @@
-<div class="container">
-    <div class="search-block">
-        <div class="search-box">
-            <input
-                class="user-id-input"
-                ac-input
-                ac-size="large"
-                placeholder="请输入要查询的用户ID"
-            />
-            <ac-button
-                class="submit-button"
-                [ac-shrink]="true"
-                [ac-width]="120"
-                ac-size="large"
-            >
-                查询
-            </ac-button>
+<div class="wrapper">
+    <div
+        class="container"
+        [ngClass]="{
+            'show-result': hasResult
+        }"
+    >
+        <div class="search-block">
+            <div class="search-box">
+                <input
+                    class="user-id-input"
+                    ac-input
+                    ac-size="large"
+                    placeholder="请输入要查询的用户ID"
+                />
+                <ac-button
+                    class="submit-button"
+                    [ac-shrink]="true"
+                    [ac-width]="120"
+                    ac-size="large"
+                    (click)="toggle()"
+                >
+                    查询
+                </ac-button>
+            </div>
+            <div class="search-tip">
+                <a href="" target="_blank">如何获取用户ID?</a>
+            </div>
         </div>
-        <div class="search-tip">
-            <a href="" target="_blank">如何获取用户ID?</a>
-        </div>
-    </div>
-    <div class="search-result">
-        <div class="search-result-content">
+        <div class="search-result">
             <div class="result-info">查询到在12个内容下面留言，共45条评论</div>
-            <div class="content-item">
-                <div class="content-item-header" title="eqweqw">
-                    <div class="content-item-header-title">
-                        天津又一网红建筑成打call圣地天津又一网红建筑成打call圣地天津又一网红建筑成打call圣地天津又一网红建筑成打call圣地 网友感叹：天堂应该就是这个模样天津又一网红建筑成打call圣圣…
-                    </div>
-                    <img src="assets/images/pages/arrow.svg" class="arrow-icon">
-                </div>
-                <div class="content-item-body"></div>
+            <div class="search-result-content">
+                <cip-query-comment-result-item></cip-query-comment-result-item>
+                <cip-query-comment-result-item></cip-query-comment-result-item>
+                <cip-query-comment-result-item></cip-query-comment-result-item>
+                <cip-query-comment-result-item></cip-query-comment-result-item>
+                <cip-query-comment-result-item></cip-query-comment-result-item>
+                <cip-query-comment-result-item></cip-query-comment-result-item>
             </div>
         </div>
     </div>

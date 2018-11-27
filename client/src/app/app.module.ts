@@ -10,6 +10,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { BrowserExtensionComponent } from './pages/browser-extension/browser-extension.component';
 import { QueryCommentComponent } from './pages/query-comment/query-comment.component';
+import { QueryCommentResultItemComponent } from './common/query-comment-result-item/query-comment-result-item.component';
+import { QueryCommentResultCommentItemComponent } from './common/query-comment-result-comment-item/query-comment-result-comment-item.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +22,8 @@ import { QueryCommentComponent } from './pages/query-comment/query-comment.compo
         ForgetPasswordComponent,
         BrowserExtensionComponent,
         QueryCommentComponent,
+        QueryCommentResultItemComponent,
+        QueryCommentResultCommentItemComponent,
     ],
     imports: [
         BrowserModule,

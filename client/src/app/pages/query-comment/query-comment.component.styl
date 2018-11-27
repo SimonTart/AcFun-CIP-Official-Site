@@ -1,9 +1,23 @@
-.container
+.wrapper
     height 100vh
     display flex
     justify-content center
     align-items center
     flex-wrap wrap
+
+.container
+    &.show-result
+        height 100vh
+        display flex
+        flex-direction column
+
+        .search-block
+            margin-top 108px
+            flex 0 0 auto
+
+        .search-result
+            flex 1 1 0
+            overflow hidden
 
 .search-block
     width 670px
@@ -30,36 +44,18 @@
     width 100%
     margin-top 42px
     display flex
-    justify-content center
-
-.search-result-content
-    width 670px
+    flex-direction column
 
     .result-info
         font-size 16px
         color #FFFFFF
+        flex 0 0 auto
+        padding-bottom 12px
 
-.content-item
-    margin-top 8px
+    .search-result-content
+        width 670px
+        flex 1 1 0
+        overflow-y scroll
 
-    &-header
-        background #fff
-        height 38px
-        padding 0 16px
-        display flex
-        align-items center
-        font-size 14px
-        color #333333
-        overflow hidden
-        cursor pointer
 
-        &-title
-            flex 1 1 0
-            overflow hidden
-            text-overflow ellipsis
-            white-space nowrap
-
-        .arrow-icon
-            flex 0 0 auto
-            margin-left 16px
 
