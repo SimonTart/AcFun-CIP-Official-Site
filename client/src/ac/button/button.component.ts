@@ -18,6 +18,8 @@ export class ButtonComponent implements OnInit {
     private _type: ButtonType = 'primary';
     private _shrink: boolean = false;
 
+    @Input('ac-width') width:number;
+
     @Input('ac-size')
     set size(size: ButtonSize) {
         this._size = size || 'medium';
@@ -35,6 +37,7 @@ export class ButtonComponent implements OnInit {
         this._shrink = shrink;
         this.setClassMap();
     }
+
 
     setClassMap() {
         this.classMap = {

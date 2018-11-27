@@ -9,6 +9,7 @@ import {AcModule} from '../ac/ac.module';
 import { LoginComponent } from './pages/login/login.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { BrowserExtensionComponent } from './pages/browser-extension/browser-extension.component';
+import { QueryCommentComponent } from './pages/query-comment/query-comment.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { BrowserExtensionComponent } from './pages/browser-extension/browser-ext
         LoginComponent,
         ForgetPasswordComponent,
         BrowserExtensionComponent,
+        QueryCommentComponent,
     ],
     imports: [
         BrowserModule,
