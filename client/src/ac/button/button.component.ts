@@ -10,9 +10,6 @@ export type ButtonSize = 'medium' | 'large';
 })
 export class ButtonComponent implements OnInit {
 
-    constructor() {
-    }
-
     private classMap;
     private _size: ButtonSize = 'medium';
     private _type: ButtonType = 'primary';

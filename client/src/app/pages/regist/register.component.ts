@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import BasePage from "../BasePage";
 
 @Component({
@@ -8,11 +8,7 @@ import BasePage from "../BasePage";
 })
 
 
-export class RegisterComponent extends BasePage implements OnInit {
+export class RegisterComponent extends BasePage {
     backgorundImageUrl = 'assets/images/pages/register_login.jpg';
     title = 'AcFun Comment Instrumentality Project（A站评论补全计划)-注册';
-
-    ngOnInit() {
-    }
-
 }

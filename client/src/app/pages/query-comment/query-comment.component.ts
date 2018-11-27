@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import BasePage from "../BasePage";
 
 @Component({
@@ -6,7 +6,7 @@ import BasePage from "../BasePage";
     templateUrl: './query-comment.component.html',
     styleUrls: ['./query-comment.component.styl']
 })
-export class QueryCommentComponent extends BasePage implements OnInit {
+export class QueryCommentComponent extends BasePage {
     backgorundImageUrl = 'assets/images/pages/query_comment.jpg';
     title = 'A站评论补全计划-评论查询(AcFun Comment Instrumentality Project Query Comment)';
 
@@ -15,8 +15,4 @@ export class QueryCommentComponent extends BasePage implements OnInit {
     toggle() {
         this.hasResult = !this.hasResult;
     }
-
-    ngOnInit() {
-    }
-
 }

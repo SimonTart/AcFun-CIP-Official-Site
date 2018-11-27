@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import BasePage from "../BasePage";
 
 @Component({
@@ -6,12 +6,7 @@ import BasePage from "../BasePage";
     templateUrl: './browser-extension.component.html',
     styleUrls: ['./browser-extension.component.styl']
 })
-export class BrowserExtensionComponent extends BasePage implements OnInit {
-
+export class BrowserExtensionComponent extends BasePage {
     backgorundImageUrl = 'assets/images/pages/browser_extension.jpg';
     title = 'A站评论补全计划插件（AcFun Comment Instrumentality Project Extension）';
-
-    ngOnInit() {
-    }
-
 }

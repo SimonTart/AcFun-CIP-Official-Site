@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
     templateUrl: './nav.component.html',
     styleUrls: ['./nav.component.styl']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
     navList = [
         {name: '插件下载', link: '/browser-extension'},
         {name: '评论查询', link: '/query-comment'},
@@ -14,9 +14,6 @@ export class NavComponent implements OnInit {
     ];
 
     constructor(public router: Router) {
-    }
-
-    ngOnInit() {
     }
 
 }
