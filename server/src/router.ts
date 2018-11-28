@@ -3,8 +3,11 @@ import * as Router from 'koa-router';
 const router = new Router();
 
 router.get('/*', async function (ctx) {
-    ctx.session.isNew = true;
-    ctx.body = 'hello world';
+    if (ctx.path === '/favicon.ico') return;
+
+    let n = ctx.session.views || 0;
+    ctx.session.views = ++n;
+    ctx.body = ' views';
 });
 
 
