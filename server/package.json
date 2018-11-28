@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/joi": "^14.0.0",
     "@types/knex": "^0.15.1",
     "@types/koa": "^2.0.47",
     "@types/koa-router": "^7.0.35",
@@ -17,9 +18,12 @@
     "typescript": "^3.1.6"
   },
   "dependencies": {
+    "joi": "^14.3.0",
     "knex": "^0.15.2",
     "koa": "^2.6.2",
     "koa-body": "^4.0.4",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "koa-session": "^5.10.0",
     "koa-session-knex-store": "^1.1.2",

@@ -1,17 +1,23 @@
 import * as koa from 'koa';
 import * as koaBody from 'koa-body';
 import * as session from 'koa-session';
-import * as koaSessopnStore from 'koa-session-knex-store';
+import * as koaJson from 'koa-json';
+import * as koaLogger from 'koa-logger';
+import * as koaSessionStore from 'koa-session-knex-store';
 
 import router from './router';
 import db from './db';
 
 const app = new koa();
-app.keys = ['some secret hurr'];
-const store = koaSessopnStore(db, { createtable: true });
 
+
+const store = koaSessionStore(db, { createtable: true });
+
+app.use(koaLogger());
+
+app.keys = ['acfun-cip-os'];
 app.use(session({
-    key: 'acfun', /** (string) cookie key (default is koa:sess) */
+    key: 'cip_id', /** (string) cookie key (default is koa:sess) */
     /** (number || 'session') maxAge in ms (default is 1 days) */
     /** 'session' will result in a cookie that expires when session/browser is closed */
     /** Warning: If a session cookie is stolen, this cookie will never expire */
@@ -24,7 +30,10 @@ app.use(session({
     renew: true, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
     store: store,
 }, app));
+
+app.use(koaJson());
 app.use(koaBody());
+
 app.use(router.routes());
 
 app.listen(4100);

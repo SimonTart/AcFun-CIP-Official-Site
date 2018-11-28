@@ -1,15 +1,8 @@
 /// <reference path="../typing.d.ts" />
+import knexConfig from '../../knexfile';
 
 const config: Config = {
-    knex: {
-        client: 'mysql',
-        connection: {
-            host: '127.0.0.1',
-            user: 'root',
-            password: '',
-            database: 'acfun_cip_os'
-        }
-    }
+    knex: knexConfig.development,
 };
 
 export default config;

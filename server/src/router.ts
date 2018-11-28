@@ -1,14 +1,9 @@
 import * as Router from 'koa-router';
 
+import * as userControllers from './controllers/userController';
+
 const router = new Router();
 
-router.get('/*', async function (ctx) {
-    if (ctx.path === '/favicon.ico') return;
-
-    let n = ctx.session.views || 0;
-    ctx.session.views = ++n;
-    ctx.body = ' views';
-});
-
+router.post('/api/register', userControllers.register);
 
 export default router;
