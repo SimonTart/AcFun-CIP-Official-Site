@@ -27,6 +27,7 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.10.0",
     "koa-session-knex-store": "^1.1.2",
-    "mysql": "^2.16.0"
+    "mysql": "^2.16.0",
+    "ts-node": "^7.0.1"
   }
 }

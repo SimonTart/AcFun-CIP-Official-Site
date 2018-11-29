@@ -7,5 +7,6 @@ declare interface Config {
             password : string,
             database : string
         }
-    }
+    },
+    encryptPasswordSalt: String,
 }
