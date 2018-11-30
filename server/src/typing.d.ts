@@ -8,5 +8,15 @@ declare interface Config {
             database : string
         }
     },
-    encryptPasswordSalt: String,
+    encryptPasswordSalt: string,
+    email: {
+        pool: boolean,
+        host: string,
+        port: number,
+        secure: boolean,
+        auth: {
+            user: string,
+            pass: string
+        }
+    },
 }

@@ -1,6 +1,6 @@
 /// <reference path="../typing.d.ts" />
 
-const config: Config = {
+const config = {
     knex: {
         client: 'mysql',
         connection: {

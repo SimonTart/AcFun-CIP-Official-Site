@@ -8,7 +8,7 @@ let config: Config;
 const APP_ENV = process.env.APP_ENV;
 
 if (APP_ENV === 'production') {
-    config = productionConfig;
+    // config = productionConfig;
 } else {
     config = developmentConfig;
 }
