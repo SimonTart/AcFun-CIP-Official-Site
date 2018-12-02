@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AcModule} from '../ac/ac.module';
-import {RegisterComponent} from './pages/regist/register.component';
+import {RegisterComponent} from './pages/register/register.component';
 import {ForgetPasswordComponent} from "./pages/forget-password/forget-password.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {BrowserExtensionComponent} from "./pages/browser-extension/browser-extension.component";

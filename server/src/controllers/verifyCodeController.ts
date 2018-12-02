@@ -9,7 +9,7 @@ export async function sendRegisterVerifyCode(ctx, next) {
     const validatorSchema = Joi.object().keys({
         email: Joi.string().email().required(),
     }).required();
-    const { error: validatorError } = Joi.validate(ctx.request.body, validatorSchema);
+    const { error: validatorError } = Joi.validate(ctx.request.body, validatorSchema, { allowUnknown: true });
     if(validatorError) {
         ctx.throw(400, '参数错误');
     }
@@ -23,6 +23,7 @@ export async function sendRegisterVerifyCode(ctx, next) {
             .where({
                 email,
                 type: VERIFY_CODE_TYPES.REGISTER,
+                is_used: false,
             })
             .andWhere('created_at' , '>' , dayjs().startOf('day').format('YYYY-MM-DD HH:MM:SS'));
 
@@ -70,6 +71,7 @@ export async function sendForgetPasswordVerifyCode(ctx, next) {
             .where({
                 email,
                 type: VERIFY_CODE_TYPES.FORGET_PASSWORD,
+                is_used: false,
             })
             .andWhere('created_at' , '>' , dayjs().startOf('day').format('YYYY-MM-DD HH:MM:SS'));
 

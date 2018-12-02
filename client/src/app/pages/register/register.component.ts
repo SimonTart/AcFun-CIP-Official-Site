@@ -2,7 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import BasePage from '../AppBasePage.component';
 import {VerifyCodeService} from '../../../core/services/verify-code.service';
-import {AbstractControl, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {interval} from 'rxjs';
+import {take} from 'rxjs/operators';
+import {UserService} from '../../../core/services/user.service';
 
 @Component({
     selector: 'app-register',
@@ -12,8 +15,6 @@ import {AbstractControl, FormControl, FormGroup, NgForm, Validators} from '@angu
 export class RegisterComponent extends BasePage implements OnInit {
     backgorundImageUrl = 'assets/images/pages/register_login.jpg';
     title = 'AcFun Comment Instrumentality Project（A站评论补全计划)-注册';
-
-    RESEND_TIME = 60;
     timeOfResend = 0;
     sendingCode = false;
 
@@ -40,7 +41,7 @@ export class RegisterComponent extends BasePage implements OnInit {
                 (control: AbstractControl): { [key: string]: any } | null => {
                     const password = control.parent && control.parent.get('password').value;
                     const confirmPassword = control.value;
-                    return password === confirmPassword ? null : { notSame: true };
+                    return password === confirmPassword ? null : {notSame: true};
 
                 }
             ],
@@ -50,7 +51,8 @@ export class RegisterComponent extends BasePage implements OnInit {
 
     constructor(
         titleService: Title,
-        private verifyCodeService: VerifyCodeService
+        private verifyCodeService: VerifyCodeService,
+        private userService: UserService,
     ) {
         super(titleService);
         this.verifyCodeService = verifyCodeService;
@@ -63,18 +65,47 @@ export class RegisterComponent extends BasePage implements OnInit {
         if (this.sendingCode || this.timeOfResend > 0) {
             return;
         }
+
+        const emailControl = this.registerForm.get('email');
+        emailControl.markAsDirty();
+        emailControl.updateValueAndValidity();
+
+        if (emailControl.status !== 'VALID') {
+            return;
+        }
+
         this.sendingCode = true;
         this.verifyCodeService.sendRegisterCode(this.registerForm.value.email).subscribe(() => {
             this.sendingCode = false;
-            this.timeOfResend = this.RESEND_TIME;
+            interval(1000).pipe(take(60)).subscribe((x) => {
+                this.timeOfResend = 59 - x;
+            });
         });
     }
 
-    onSubmit(form: NgForm) {
+    get verifyCodeButtonTip() {
+        if (this.timeOfResend > 0) {
+            return `${this.timeOfResend}秒后可重发`;
+        }
+        if (this.sendingCode) {
+            return '发送中...';
+        }
+        return '发送验证码';
+    }
+
+    onSubmit() {
         for (const i in this.registerForm.controls) {
             this.registerForm.controls[i].markAsDirty();
             this.registerForm.controls[i].updateValueAndValidity();
         }
+
+        if (this.registerForm.status !== 'VALID') {
+            return;
+        }
+
+        this.userService.register(this.registerForm.value).subscribe(() => {
+            console.log('注册成功');
+        });
     }
 
 

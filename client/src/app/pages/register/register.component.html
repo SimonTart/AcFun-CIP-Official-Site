@@ -24,11 +24,13 @@
                 />
                 <button
                     class="send-verify-code-button"
+                    type="button"
                     ac-button
                     ac-size="large"
-                    ac-type="secondary"
+                    [ac-type]="timeOfResend > 0 ? 'disabled' : 'secondary'"
+                    (click)="sendCode()"
                 >
-                    发送验证码
+                    {{verifyCodeButtonTip}}
                 </button>
             </div>
             <ac-form-field-error *ngIf="registerForm.get('verifyCode').dirty">
