@@ -1,5 +1,5 @@
 <div class="register-box">
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit">
+    <form #form="ngForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <h1 class="title">注册</h1>
         <ac-form-field>
             <input
@@ -56,7 +56,7 @@
             />
             <ac-form-field-error *ngIf="registerForm.get('password').dirty">
                 <span *ngIf="registerForm.get('password').hasError('required')">请输入密码</span>
-                <span *ngIf="registerForm.get('password').hasError('length')">请输入至8位密码</span>
+                <span *ngIf="registerForm.get('password').hasError('minlength')">请输入至8位密码</span>
             </ac-form-field-error>
         </ac-form-field>
         <ac-form-field>
@@ -67,6 +67,10 @@
                 ac-size="large"
                 formControlName="confirmPassword"
             />
+            <ac-form-field-error *ngIf="registerForm.get('confirmPassword').dirty">
+                <span *ngIf="registerForm.get('confirmPassword').hasError('required')">请输入确认密码</span>
+                <span *ngIf="registerForm.get('confirmPassword').hasError('notSame')">两次输入的密码不一致</span>
+            </ac-form-field-error>
         </ac-form-field>
         <ac-form-field>
             <div class="submit-button">

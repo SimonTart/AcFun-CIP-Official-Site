@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import BasePage from '../AppBasePage.component';
 import {VerifyCodeService} from '../../../core/services/verify-code.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-register',
@@ -31,16 +31,22 @@ export class RegisterComponent extends BasePage implements OnInit {
             updateOn: 'change',
         }),
         password: new FormControl('', {
-            validators: [Validators.required],
+            validators: [Validators.required, Validators.minLength(8)],
             updateOn: 'change',
         }),
         confirmPassword: new FormControl('', {
-            validators: [Validators.required],
+            validators: [
+                Validators.required,
+                (control: AbstractControl): { [key: string]: any } | null => {
+                    const password = control.parent && control.parent.get('password').value;
+                    const confirmPassword = control.value;
+                    return password === confirmPassword ? null : { notSame: true };
+
+                }
+            ],
             updateOn: 'change',
         }),
     });
-
-    json = JSON
 
     constructor(
         titleService: Title,
@@ -64,8 +70,11 @@ export class RegisterComponent extends BasePage implements OnInit {
         });
     }
 
-    onSubmit() {
-        console.log('submt');
+    onSubmit(form: NgForm) {
+        for (const i in this.registerForm.controls) {
+            this.registerForm.controls[i].markAsDirty();
+            this.registerForm.controls[i].updateValueAndValidity();
+        }
     }
 
 
