@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ElementRef, Renderer2} from '@angular/core';
+import {Component, OnInit, Input, ElementRef, Renderer2, HostListener} from '@angular/core';
 
 export type InputSize = 'medium' | 'large';
 
@@ -23,22 +23,22 @@ export class InputComponent implements OnInit {
     }
 
     setClass() {
-        const oldClasses = Object.keys(this.classMap).filter((key) => !! this.classMap[key]);
+        const oldClasses = Object.keys(this.classMap).filter((key) => !!this.classMap[key]);
         this.classMap = {
             [this._size]: true,
         };
-        const newClasses = Object.keys(this.classMap).filter((key) => !! this.classMap[key]);
+        const newClasses = Object.keys(this.classMap).filter((key) => !!this.classMap[key]);
         if (oldClasses.length > 0) {
-            oldClasses.forEach((oldClass) => this.renderer.removeClass(this.input.nativeElement, oldClass))
+            oldClasses.forEach((oldClass) => this.renderer.removeClass(this.input.nativeElement, oldClass));
         }
-        if (newClasses.length >0) {
-            newClasses.forEach((newClass) => this.renderer.addClass(this.input.nativeElement, newClass))
+        if (newClasses.length > 0) {
+            newClasses.forEach((newClass) => this.renderer.addClass(this.input.nativeElement, newClass));
         }
 
     }
 
     ngOnInit() {
-        this.setClass()
+        this.setClass();
     }
 
 }

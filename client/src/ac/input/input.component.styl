@@ -1,6 +1,5 @@
 :host
     width 100%
-    height 100%
     outline none
     padding 0 12px
     font-size 14px
@@ -17,12 +16,12 @@
     &:focus
         border-color #333
 
-:host-context(.large)
+:host(.large)
     height 40px
     line-height 40px
 
 
-:host-context(.ng-invalid)
+:host(.ng-invalid.ng-dirty)
     border-color #FF0015
     &::placeholder
         color #ccc

@@ -1,51 +1,62 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, HostBinding, ElementRef, Renderer2} from '@angular/core';
 
 export type ButtonType = 'primary' | 'secondary' | 'disabled';
 export type ButtonSize = 'medium' | 'large';
 
 @Component({
-    selector: 'ac-button',
+    selector: '[ac-button]',
     templateUrl: './button.component.html',
-    styleUrls: ['./button.component.styl']
+    styleUrls: ['./button.component.styl'],
 })
 export class ButtonComponent implements OnInit {
+    constructor(private input: ElementRef, private renderer: Renderer2) {
 
-    private classMap;
+    }
+
+    private classMap = {};
     private _size: ButtonSize = 'medium';
     private _type: ButtonType = 'primary';
-    private _shrink: boolean = false;
+    private _shrink = false;
 
-    @Input('ac-width') width:number;
+    @Input('ac-width') width: number;
 
     @Input('ac-size')
     set size(size: ButtonSize) {
         this._size = size || 'medium';
-        this.setClassMap();
+        this.setClass();
     }
 
     @Input('ac-type')
     set type(type: ButtonType) {
         this._type = type || 'primary';
-        this.setClassMap();
+        this.setClass();
     }
 
     @Input('ac-shrink')
     set shrink(shrink: boolean) {
         this._shrink = shrink;
-        this.setClassMap();
+        this.setClass();
     }
 
-
-    setClassMap() {
+    setClass() {
+        const oldClasses = Object.keys(this.classMap).filter((key) => !!this.classMap[key]);
         this.classMap = {
             [this._size]: true,
             [this._type]: true,
             shrink: this._shrink,
         };
+        const newClasses = Object.keys(this.classMap).filter((key) => !!this.classMap[key]);
+        if (oldClasses.length > 0) {
+            oldClasses.forEach((oldClass) => this.renderer.removeClass(this.input.nativeElement, oldClass));
+        }
+        if (newClasses.length > 0) {
+            newClasses.forEach((newClass) => this.renderer.addClass(this.input.nativeElement, newClass));
+        }
+
     }
 
     ngOnInit() {
-        this.setClassMap();
+        this.setClass();
     }
 
 }

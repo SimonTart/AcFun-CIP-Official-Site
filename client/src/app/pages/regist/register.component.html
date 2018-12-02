@@ -1,56 +1,86 @@
-<div class="regist-box">
-    <h1 class="title">注册</h1>
-    <ac-form-field>
-        <input
-            placeholder="请输入邮箱"
-            ac-input
-            ac-size="large"
-        />
-    </ac-form-field>
-    <ac-form-field>
-        <div class="verify-code-row">
+<div class="register-box">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit">
+        <h1 class="title">注册</h1>
+        <ac-form-field>
             <input
-                class="verify-code-input"
-                placeholder="请输入验证码"
+                placeholder="请输入邮箱"
                 ac-input
                 ac-size="large"
+                formControlName="email"
             />
-            <ac-button
-                class="send-verify-code-button"
+            <ac-form-field-error *ngIf="registerForm.get('email').dirty">
+                <span *ngIf="registerForm.get('email').hasError('required')">请输入邮件</span>
+                <span *ngIf="registerForm.get('email').hasError('email')">请输入合法的邮件格式</span>
+            </ac-form-field-error>
+        </ac-form-field>
+        <ac-form-field>
+            <div class="verify-code-row">
+                <input
+                    class="verify-code-input"
+                    placeholder="请输入验证码"
+                    ac-input
+                    ac-size="large"
+                    formControlName="verifyCode"
+                />
+                <button
+                    class="send-verify-code-button"
+                    ac-button
+                    ac-size="large"
+                    ac-type="secondary"
+                >
+                    发送验证码
+                </button>
+            </div>
+            <ac-form-field-error *ngIf="registerForm.get('verifyCode').dirty">
+                <span *ngIf="registerForm.get('verifyCode').hasError('required')">请输入验证码</span>
+            </ac-form-field-error>
+        </ac-form-field>
+        <ac-form-field>
+            <input
+                placeholder="请输入用户名"
+                ac-input
                 ac-size="large"
-                ac-type="secondary"
-            >发送验证码</ac-button>
-        </div>
-    </ac-form-field>
-    <ac-form-field>
-        <input
-            placeholder="请输入邀请码"
-            ac-input
-            ac-size="large"
-        />
-    </ac-form-field>
-    <ac-form-field>
-        <input
-            placeholder="请输入密码"
-            ac-input
-            ac-size="large"
-        />
-    </ac-form-field>
-    <ac-form-field>
-        <input
-            placeholder="确认密码"
-            ac-input
-            ac-size="large"
-        />
-    </ac-form-field>
-    <ac-form-field>
-        <div class="submit-button">
-            <ac-button
+                formControlName="name"
+            />
+            <ac-form-field-error *ngIf="registerForm.get('name').dirty">
+                <span *ngIf="registerForm.get('name').hasError('required')">请输入用户名</span>
+            </ac-form-field-error>
+        </ac-form-field>
+        <ac-form-field>
+            <input
+                placeholder="请输入密码"
+                ac-input
+                type="password"
                 ac-size="large"
-            >注册</ac-button>
+                formControlName="password"
+            />
+            <ac-form-field-error *ngIf="registerForm.get('password').dirty">
+                <span *ngIf="registerForm.get('password').hasError('required')">请输入密码</span>
+                <span *ngIf="registerForm.get('password').hasError('length')">请输入至8位密码</span>
+            </ac-form-field-error>
+        </ac-form-field>
+        <ac-form-field>
+            <input
+                placeholder="确认密码"
+                ac-input
+                type="password"
+                ac-size="large"
+                formControlName="confirmPassword"
+            />
+        </ac-form-field>
+        <ac-form-field>
+            <div class="submit-button">
+                <button
+                    type="submit"
+                    ac-button
+                    ac-size="large"
+                >
+                    注册
+                </button>
+            </div>
+        </ac-form-field>
+        <div class="links">
+            <a routerLink="/login" class="to-login">返回登录</a>
         </div>
-    </ac-form-field>
-    <div class="links">
-        <a routerLink="/login" class="to-login">返回登录</a>
-    </div>
+    </form>
 </div>
