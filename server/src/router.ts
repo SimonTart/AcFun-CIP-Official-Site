@@ -7,7 +7,7 @@ const router = new Router();
 
 router.post('/api/user/register', userControllers.register);
 router.post('/api/user/verify-email', userControllers.verifyEmail);
-router.post('/api/user/veridy-name', userControllers.verifyName);
+router.post('/api/user/verify-name', userControllers.verifyName);
 router.post('/api/verify-code/register', verifyCodeControllers.sendRegisterVerifyCode);
 router.post('/api/verify-code/forget-password', verifyCodeControllers.sendForgetPasswordVerifyCode);
 

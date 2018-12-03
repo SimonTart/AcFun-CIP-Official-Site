@@ -6,13 +6,16 @@ import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/form
 import {interval} from 'rxjs';
 import {take} from 'rxjs/operators';
 import {UserService} from '../../../core/services/user.service';
+import {UniqueEmailValidator} from '../../validators/unique-email.validator';
+import {UniqueNameValidator} from '../../validators/unique-name.validator';
+
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.styl']
 })
-export class RegisterComponent extends BasePage implements OnInit {
+export class RegisterComponent extends BasePage {
     backgorundImageUrl = 'assets/images/pages/register_login.jpg';
     title = 'AcFun Comment Instrumentality Project（A站评论补全计划)-注册';
     timeOfResend = 0;
@@ -20,7 +23,7 @@ export class RegisterComponent extends BasePage implements OnInit {
 
     registerForm = new FormGroup({
         email: new FormControl('', {
-            validators: [Validators.required, Validators.email],
+            validators: [Validators.required, Validators.email, this.uniqueEmailValidator.validate],
             updateOn: 'change',
         }),
         name: new FormControl('', {
@@ -51,14 +54,12 @@ export class RegisterComponent extends BasePage implements OnInit {
 
     constructor(
         titleService: Title,
+        private uniqueEmailValidator: UniqueEmailValidator,
+        private uniqueNameValidator: UniqueNameValidator,
         private verifyCodeService: VerifyCodeService,
         private userService: UserService,
     ) {
         super(titleService);
-        this.verifyCodeService = verifyCodeService;
-    }
-
-    ngOnInit(): void {
     }
 
     sendCode() {

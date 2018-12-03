@@ -1,0 +1,3 @@
+interface ResponseData {
+    message: string;
+}
