@@ -7,10 +7,12 @@
                 ac-input
                 ac-size="large"
                 formControlName="email"
+                (blur)="onEmailBlur()"
             />
             <ac-form-field-error *ngIf="registerForm.get('email').dirty">
                 <span *ngIf="registerForm.get('email').hasError('required')">请输入邮件</span>
                 <span *ngIf="registerForm.get('email').hasError('email')">请输入合法的邮件格式</span>
+                <span *ngIf="registerForm.get('email').hasError('registered')">该邮箱已注册</span>
             </ac-form-field-error>
         </ac-form-field>
         <ac-form-field>

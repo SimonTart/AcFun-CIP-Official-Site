@@ -23,7 +23,7 @@ export class RegisterComponent extends BasePage {
 
     registerForm = new FormGroup({
         email: new FormControl('', {
-            validators: [Validators.required, Validators.email, this.uniqueEmailValidator.validate],
+            validators: [Validators.required, Validators.email],
             updateOn: 'change',
         }),
         name: new FormControl('', {
@@ -92,6 +92,13 @@ export class RegisterComponent extends BasePage {
             return '发送中...';
         }
         return '发送验证码';
+    }
+
+    onEmailBlur(e: Event) {
+        const emailControl = this.registerForm.get('email');
+        this.uniqueEmailValidator.validate(emailControl).subscribe(
+            (error) => emailControl.setErrors(error),
+        );
     }
 
     onSubmit() {

@@ -2,7 +2,7 @@ import {AbstractControl, AsyncValidator, ValidationErrors} from '@angular/forms'
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {UserService} from '../../core/services/user.service';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, debounceTime, map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -12,10 +12,11 @@ export class UniqueEmailValidator implements AsyncValidator {
 
     }
 
-    validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-        return this.userService.verifyEmail(control.value).pipe(
-            map(data => data.registered ? {registered: true} : null),
-            catchError(() => null),
-        );
+    validate = (control: AbstractControl): Observable<ValidationErrors | null> => {
+        return this.userService.verifyEmail(control.value)
+            .pipe(
+                map(data => data.registered ? {registered: true} : null),
+                catchError(() => Observable.create(null))
+            );
     }
 }
