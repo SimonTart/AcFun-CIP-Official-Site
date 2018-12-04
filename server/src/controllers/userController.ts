@@ -30,6 +30,7 @@ export async function register(ctx, next) {
                 email,
                 code: verifyCode,
                 type: VERIFY_CODE_TYPES.REGISTER,
+                is_used: false,
             })
             .andWhere('created_at', '>', dayjs().startOf('day').format('YYYY-MM-DD HH:MM:SS'));
 
@@ -145,6 +146,61 @@ export async function verifyName(ctx, next) {
             used: false,
             message: '该用户名未使用',
         };
+    }
+
+    next();
+}
+
+
+// 用户重置密码
+export async function forgetPassword(ctx, next) {
+    const validatorSchema = Joi.object().keys({
+        email: Joi.string().email().required(),
+        password: Joi.string().min(8).required(),
+        verifyCode: Joi.string().required(),
+    }).required();
+    const {error: validatorError} = Joi.validate(ctx.request.body, validatorSchema, {allowUnknown: true});
+    if (validatorError) {
+        ctx.throw(400, '参数错误')
+    }
+    const {email, name, verifyCode} = ctx.request.body;
+
+    try {
+        const existUser = await db.select().from('user').where('email', email).first();
+        if (!existUser) {
+            ctx.throw(400, '该邮箱未注册');
+        }
+
+        const existVerifyCode = await db.select().first()
+            .from('verify_code')
+            .where({
+                email,
+                code: verifyCode,
+                type: VERIFY_CODE_TYPES.FORGET_PASSWORD,
+                is_used: false,
+            })
+            .andWhere('created_at', '>', dayjs().startOf('day').format('YYYY-MM-DD HH:MM:SS'));
+
+        if (!existVerifyCode) {
+            ctx.throw(400, '验证码错误');
+        }
+
+        const password = encryptPassword(ctx.request.body.password);
+        await db.transaction((trx) => {
+            return trx('user').update({
+                password,
+            })
+            .where({ email })
+            .then(() => {
+                return trx('verify_code').update({ is_used: true }).where({ id: existVerifyCode.id });
+            })
+            .then(trx.commit)
+            .catch(trx.rollback);
+        })
+
+        ctx.body = {message: '注册成功'};
+    } catch (e) {
+        throw e;
     }
 
     next();
