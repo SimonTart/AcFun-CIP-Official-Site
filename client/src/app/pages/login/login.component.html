@@ -1,34 +1,44 @@
-<p>
-  login works!
-</p>
 <div class="login-box">
-    <h1 class="title">登录</h1>
-    <ac-form-field>
-        <input
-            placeholder="请输入邮箱"
-            ac-input
-            ac-size="large"
-        />
-    </ac-form-field>
-    <ac-form-field>
-        <input
-            placeholder="请输入密码"
-            ac-input
-            ac-size="large"
-        />
-    </ac-form-field>
-    <ac-form-field>
-        <div class="submit-button">
-            <button
-                ac-button=""
+    <form [formGroup]="loginForm" #form="ngForm" (ngSubmit)="onSubmit()">
+        <h1 class="title">登录</h1>
+        <ac-form-field>
+            <input
+                placeholder="请输入邮箱"
+                ac-input
                 ac-size="large"
-            >
-                登录
-            </button>
-        </div>
-    </ac-form-field>
+                formControlName="email"
+            />
+            <ac-form-field-error *ngIf="loginForm.get('email').dirty">
+                <span *ngIf="loginForm.get('email').hasError('required')">请输入邮件</span>
+                <span *ngIf="loginForm.get('email').hasError('email')">请输入合法的邮件格式</span>
+            </ac-form-field-error>
+        </ac-form-field>
+        <ac-form-field>
+            <input
+                placeholder="请输入密码"
+                ac-input
+                type="password"
+                ac-size="large"
+                formControlName="password"
+            />
+            <ac-form-field-error *ngIf="loginForm.get('password').dirty">
+                <span *ngIf="loginForm.get('password').hasError('required')">请输入密码</span>
+            </ac-form-field-error>
+        </ac-form-field>
+        <ac-form-field>
+            <div class="submit-button">
+                <button
+                    ac-button
+                    ac-size="large"
+                    type="submit"
+                >
+                    登录
+                </button>
+            </div>
+        </ac-form-field>
+    </form>
     <div class="links">
         <a routerLink="/forget-password">忘记密码</a>
-        <a routerLink="/login" class="to-login">返回登录</a>
+        <a routerLink="/register" class="to-register">注册</a>
     </div>
 </div>

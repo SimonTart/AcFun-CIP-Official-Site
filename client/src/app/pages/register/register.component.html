@@ -45,6 +45,7 @@
                 ac-input
                 ac-size="large"
                 formControlName="name"
+                (blur)="onNameBlur()"
             />
             <ac-form-field-error *ngIf="registerForm.get('name').dirty">
                 <span *ngIf="registerForm.get('name').hasError('required')">请输入用户名</span>

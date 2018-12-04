@@ -12,7 +12,7 @@ export class UniqueNameValidator implements AsyncValidator {
 
     }
 
-    validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+    validate(control: AbstractControl): Observable<ValidationErrors | null> {
         return this.userService.verifyName(control.value).pipe(
             map(data => data.isUsed ? {'used': true} : null),
             catchError(() => null)

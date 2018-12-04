@@ -59,6 +59,38 @@ export async function register(ctx, next) {
     next();
 }
 
+export async function login(ctx, next) {
+    const validatorSchema = Joi.object().keys({
+        email: Joi.string().email().required(),
+        password: Joi.string().required(),
+    }).required();
+
+    const {error: validatorError} = Joi.validate(ctx.request.body, validatorSchema, {allowUnknown: true});
+    if (validatorError) {
+        ctx.throw(400, '参数错误')
+    }
+
+    const {email} = ctx.request.body;
+    const password = encryptPassword(ctx.request.body.password);
+    try {
+        const user = await db.select().from('user').where({
+            email,
+            password,
+        }).first();
+
+        if (!user) {
+            ctx.throw(400, '邮箱或密码错误');
+        } else {
+            ctx.session.userId = user.id;
+            ctx.body = {message: '登录成功'};
+        }
+    } catch (e) {
+        throw e;
+    }
+
+    next();
+}
+
 
 // 验证邮箱是否已经注册
 export async function verifyEmail(ctx, next) {
@@ -72,7 +104,7 @@ export async function verifyEmail(ctx, next) {
         ctx.throw(400, '参数错误');
     }
     const { email } = ctx.request.body;
-    const existEmail = await db.select().from('user').where({ email });
+    const existEmail = await db.select().from('user').where({ email }).first();
 
     if (existEmail) {
         ctx.body = {
@@ -101,7 +133,7 @@ export async function verifyName(ctx, next) {
         ctx.throw(400, '参数错误');
     }
     const { name } = ctx.request.body;
-    const existName = await db.select().from('user').where({ name });
+    const existName = await db.select().from('user').where({ name }).first();
 
     if (existName) {
         ctx.body = {

@@ -94,10 +94,17 @@ export class RegisterComponent extends BasePage {
         return '发送验证码';
     }
 
-    onEmailBlur(e: Event) {
+    onEmailBlur() {
         const emailControl = this.registerForm.get('email');
         this.uniqueEmailValidator.validate(emailControl).subscribe(
             (error) => emailControl.setErrors(error),
+        );
+    }
+
+    onNameBlur() {
+        const nameControl = this.registerForm.get('name');
+        this.uniqueNameValidator.validate(nameControl).subscribe(
+            (error) => nameControl.setErrors(error),
         );
     }
 

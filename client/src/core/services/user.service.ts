@@ -24,6 +24,10 @@ export class UserService {
         return this.http.post<ResponseData>('/api/user/register', user);
     }
 
+    login(user) {
+        return this.http.post<ResponseData>('/api/user/login', user);
+    }
+
     verifyEmail(email) {
         return this.http.post<VerifyEmailData>('/api/user/verify-email', {email});
     }
