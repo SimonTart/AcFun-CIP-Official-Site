@@ -198,7 +198,7 @@ export async function forgetPassword(ctx, next) {
             .catch(trx.rollback);
         })
 
-        ctx.body = {message: '注册成功'};
+        ctx.body = {message: '密码修改成功'};
     } catch (e) {
         throw e;
     }

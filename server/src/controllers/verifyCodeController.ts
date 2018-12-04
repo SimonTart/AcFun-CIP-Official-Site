@@ -3,7 +3,7 @@ import * as nanoid from 'nanoid';
 import * as dayjs from 'dayjs'
 import db from '../db';
 import {VERIFY_CODE_TYPES} from '../common/constant';
-import {sendRegisterMail} from '../utils/email';
+import {sendRegisterMail,sendForgetPasswordMail} from '../utils/email';
 
 export async function sendRegisterVerifyCode(ctx, next) {
     const validatorSchema = Joi.object().keys({
@@ -87,7 +87,7 @@ export async function sendForgetPasswordVerifyCode(ctx, next) {
             sendCode = existVerifyCode[0].code;
         }
 
-        await sendRegisterMail(email, sendCode);
+        await sendForgetPasswordMail(email, sendCode);
         ctx.body = {
             message: '验证码已发送',
         };

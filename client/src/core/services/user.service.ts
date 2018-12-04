@@ -24,6 +24,10 @@ export class UserService {
         return this.http.post<ResponseData>('/api/user/register', user);
     }
 
+    forgetPassword(user) {
+        return this.http.post<ResponseData>('/api/user/forget-password', user);
+    }
+
     login(user) {
         return this.http.post<ResponseData>('/api/user/login', user);
     }

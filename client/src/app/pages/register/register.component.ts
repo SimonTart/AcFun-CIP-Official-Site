@@ -96,6 +96,9 @@ export class RegisterComponent extends BasePage {
 
     onEmailBlur() {
         const emailControl = this.registerForm.get('email');
+        if (emailControl.errors) {
+            return;
+        }
         this.uniqueEmailValidator.validate(emailControl).subscribe(
             (error) => emailControl.setErrors(error),
         );
@@ -103,6 +106,9 @@ export class RegisterComponent extends BasePage {
 
     onNameBlur() {
         const nameControl = this.registerForm.get('name');
+        if (nameControl.errors) {
+            return;
+        }
         this.uniqueNameValidator.validate(nameControl).subscribe(
             (error) => nameControl.setErrors(error),
         );

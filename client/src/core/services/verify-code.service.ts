@@ -12,4 +12,8 @@ export class VerifyCodeService {
     sendRegisterCode(email) {
         return this.http.post('/api/verify-code/register', {email});
     }
+
+    sendForgetPasswordCode(email) {
+        return this.http.post('/api/verify-code/forget-password', {email});
+    }
 }
