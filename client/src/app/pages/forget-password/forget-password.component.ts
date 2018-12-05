@@ -45,6 +45,8 @@ export class ForgetPasswordComponent extends BasePage {
         }),
     });
 
+    submitting = false;
+
     constructor(
         titleService: Title,
         private verifyCodeService: VerifyCodeService,
@@ -104,6 +106,9 @@ export class ForgetPasswordComponent extends BasePage {
     }
 
     onSubmit() {
+        if (this.submitting) {
+            return;
+        }
         for (const i in this.resetPasswordForm.controls) {
             const control = this.resetPasswordForm.controls[i];
             if (!control.dirty) {

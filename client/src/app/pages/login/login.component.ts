@@ -24,6 +24,8 @@ export class LoginComponent extends BasePage {
         }),
     });
 
+    submitting = false;
+
     constructor(
         titleService: Title,
         private userService: UserService,
@@ -32,6 +34,9 @@ export class LoginComponent extends BasePage {
     }
 
     onSubmit() {
+        if (this.submitting) {
+            return;
+        }
         for (const i in this.loginForm.controls) {
             this.loginForm.controls[i].markAsDirty();
             this.loginForm.controls[i].updateValueAndValidity();
@@ -41,8 +46,8 @@ export class LoginComponent extends BasePage {
             return;
         }
 
-        this.userService.login(this.loginForm.value).subscribe(() => {
-            console.log('登录成功');
-        }, (error => console.log(error)));
+        this.userService.login(this.loginForm.value).subscribe((data) => {
+            console.log(data.message);
+        }, (res) => console.log(res.error.message)));
     }
 }

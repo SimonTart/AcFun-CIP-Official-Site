@@ -9,6 +9,7 @@ declare interface Config {
         }
     },
     encryptPasswordSalt: string,
+    appKeys: Array<string>,
     email: {
         pool: boolean,
         host: string,

@@ -20,6 +20,7 @@ export class RegisterComponent extends BasePage {
     title = 'AcFun Comment Instrumentality Project（A站评论补全计划)-注册';
     timeOfResend = 0;
     sendingCode = false;
+    submitting = false;
 
     registerForm = new FormGroup({
         email: new FormControl('', {
@@ -115,6 +116,9 @@ export class RegisterComponent extends BasePage {
     }
 
     onSubmit() {
+        if (this.submitting) {
+            return;
+        }
         for (const i in this.registerForm.controls) {
             this.registerForm.controls[i].markAsDirty();
             this.registerForm.controls[i].updateValueAndValidity();

@@ -5,6 +5,7 @@ import * as process from 'process';
 const config: Config = {
     knex: knexConfig.development,
     encryptPasswordSalt: 'acfun-cip',
+    appKeys: ['acfun-cip'],
     email: {
         pool: true,
         host: 'smtp.exmail.qq.com',
