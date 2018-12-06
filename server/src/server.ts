@@ -7,6 +7,7 @@ import * as koaSessionStore from 'koa-session-knex-store';
 
 import router from './router';
 import db from './db';
+import {appendUser} from './utils/middlewares';
 
 const app = new koa();
 
@@ -52,12 +53,13 @@ app.use(session({
     store: store,
 }, app));
 
+app.use(appendUser);
 app.use(koaJson());
 app.use(koaBody());
 
 app.use(router.routes());
 
-app.on('error', (err, ctx) => {
+app.on('error', (err) => {
     console.error(err);
 });
 

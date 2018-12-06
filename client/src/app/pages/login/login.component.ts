@@ -48,6 +48,6 @@ export class LoginComponent extends BasePage {
 
         this.userService.login(this.loginForm.value).subscribe((data) => {
             console.log(data.message);
-        }, (res) => console.log(res.error.message)));
+        }, (res) => console.log(res.error.message));
     }
 }
