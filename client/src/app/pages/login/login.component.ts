@@ -3,6 +3,7 @@ import BasePage from '../AppBasePage.component';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {UserService} from '../../../core/services/user.service';
+import {MessageService} from '../../../ac/message/message.service';
 
 @Component({
     selector: 'app-login',
@@ -27,8 +28,9 @@ export class LoginComponent extends BasePage {
     submitting = false;
 
     constructor(
-        titleService: Title,
+        public titleService: Title,
         private userService: UserService,
+        private messageService: MessageService,
     ) {
         super(titleService);
     }

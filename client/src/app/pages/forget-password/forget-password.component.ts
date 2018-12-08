@@ -48,7 +48,7 @@ export class ForgetPasswordComponent extends BasePage {
     submitting = false;
 
     constructor(
-        titleService: Title,
+        public titleService: Title,
         private verifyCodeService: VerifyCodeService,
         private userService: UserService,
     ) {

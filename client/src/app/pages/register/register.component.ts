@@ -54,7 +54,7 @@ export class RegisterComponent extends BasePage {
     });
 
     constructor(
-        titleService: Title,
+        public titleService: Title,
         private uniqueEmailValidator: UniqueEmailValidator,
         private uniqueNameValidator: UniqueNameValidator,
         private verifyCodeService: VerifyCodeService,
