@@ -1,4 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+
+export interface Message {
+    id: number;
+    type: string;
+    content: string;
+}
 
 @Component({
     selector: 'ac-message',
@@ -6,5 +12,5 @@ import {Component} from '@angular/core';
     styleUrls: ['./message.component.styl'],
 })
 export class MessageComponent {
-
+    @Input() private message: Message;
 }

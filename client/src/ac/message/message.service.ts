@@ -1,6 +1,6 @@
 import {ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, Injector, Optional, Type} from '@angular/core';
 import {MessageContainerComponent} from './message-container.component';
-
+let globalCount = 0;
 @Injectable({
     providedIn: 'root'
 })
@@ -18,7 +18,12 @@ export class MessageService {
 
     create({ type, content }) {
         console.log('create');
-        this.container.createMessage({ type, content });
+        globalCount ++;
+        this.container.createMessage({
+            id: globalCount,
+            type: 'test',
+            content: 'test',
+        });
     }
 
     private createContainer() {

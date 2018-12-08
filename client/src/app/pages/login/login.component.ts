@@ -36,6 +36,8 @@ export class LoginComponent extends BasePage {
     }
 
     onSubmit() {
+        this.messageService.create({ type: 'test', content: '2333'})
+        return;
         if (this.submitting) {
             return;
         }

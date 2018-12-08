@@ -1,9 +1,6 @@
 import {Component} from '@angular/core';
+import { Message } from './message.component';
 
-interface Message {
-    type: string;
-    content: string;
-}
 
 @Component({
     selector: 'ac-message-container',
