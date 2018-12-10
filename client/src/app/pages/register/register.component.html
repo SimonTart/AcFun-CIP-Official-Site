@@ -30,6 +30,7 @@
                     ac-button
                     ac-size="large"
                     [ac-type]="timeOfResend > 0 ? 'disabled' : 'secondary'"
+                    [ac-loading]="sendingCode"
                     (click)="sendCode()"
                 >
                     {{verifyCodeButtonTip}}
@@ -84,6 +85,7 @@
                     type="submit"
                     ac-button
                     ac-size="large"
+                    [ac-loading]="submitting"
                 >
                     注册
                 </button>

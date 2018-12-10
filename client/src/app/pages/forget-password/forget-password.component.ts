@@ -5,7 +5,7 @@ import {VerifyCodeService} from '../../../core/services/verify-code.service';
 import {UserService} from '../../../core/services/user.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {interval} from 'rxjs';
-import {take} from 'rxjs/operators';
+import {finalize, take} from 'rxjs/operators';
 import {MessageService} from '../../../ac/message/message.service';
 
 @Component({
@@ -46,7 +46,7 @@ export class ForgetPasswordComponent extends BasePage {
         }),
     });
 
-    submitting = false;
+    private submitting = false;
 
     constructor(
         public titleService: Title,
@@ -76,25 +76,29 @@ export class ForgetPasswordComponent extends BasePage {
         }
 
         this.sendingCode = true;
-        this.verifyCodeService.sendForgetPasswordCode(this.resetPasswordForm.value.email).subscribe(() => {
-            this.sendingCode = false;
-            interval(1000).pipe(take(60)).subscribe((x) => {
-                this.timeOfResend = 59 - x;
-            });
-        });
+        this.verifyCodeService.sendForgetPasswordCode(this.resetPasswordForm.value.email)
+            .pipe(finalize(() => this.sendingCode = false))
+            .subscribe(
+                (data) => {
+                    this.messageService.success(data.message);
+                    this.sendingCode = false;
+                    this.timeOfResend = 60;
+                    interval(1000).pipe(take(60)).subscribe((x) => {
+                        this.timeOfResend --;
+                    });
+                },
+                (res) => this.messageService.error(res.error.message)
+            );
     }
 
     get verifyCodeButtonTip() {
         if (this.timeOfResend > 0) {
-            return `${this.timeOfResend}秒后可重发`;
-        }
-        if (this.sendingCode) {
-            return '发送中...';
+            return `${this.timeOfResend} 秒后可重发`;
         }
         return '发送验证码';
     }
 
-    checkEmailRegistered() {
+    checkEmail() {
         const emailControl = this.resetPasswordForm.get('email');
         if (emailControl.errors) {
             return;
@@ -108,12 +112,9 @@ export class ForgetPasswordComponent extends BasePage {
     }
 
     onSubmit() {
-        if (this.submitting) {
-            return;
-        }
         for (const i in this.resetPasswordForm.controls) {
             const control = this.resetPasswordForm.controls[i];
-            if (!control.errors) {
+            if (!control.dirty) {
                 control.markAsDirty();
                 control.updateValueAndValidity();
             }
@@ -123,12 +124,15 @@ export class ForgetPasswordComponent extends BasePage {
             return;
         }
 
-        this.userService.forgetPassword(this.resetPasswordForm.value).subscribe(
-            (data) => {
-                this.messageService.success(data.message);
-            },
-            (res) => this.messageService.error(res.error.message)
-        );
+        this.submitting = true;
+        this.userService.forgetPassword(this.resetPasswordForm.value)
+            .pipe(finalize(() => this.submitting = false))
+            .subscribe(
+                (data) => {
+                    this.messageService.success(data.message);
+                },
+                (res) => this.messageService.error(res.error.message),
+            );
     }
 
 }

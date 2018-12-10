@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {UserService} from '../../../core/services/user.service';
 import {MessageService} from '../../../ac/message/message.service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent extends BasePage {
         }),
     });
 
-    submitting = false;
+    private submitting = false;
 
     constructor(
         public titleService: Title,
@@ -36,12 +37,9 @@ export class LoginComponent extends BasePage {
     }
 
     onSubmit() {
-        if (this.submitting) {
-            return;
-        }
         for (const i in this.loginForm.controls) {
             const control = this.loginForm.controls[i];
-            if (!control.errors) {
+            if (!control.dirty) {
                 control.markAsDirty();
                 control.updateValueAndValidity();
             }
@@ -51,7 +49,12 @@ export class LoginComponent extends BasePage {
             return;
         }
 
-        this.userService.login(this.loginForm.value).subscribe(
+        this.submitting = true;
+        this.userService.login(this.loginForm.value)
+            .pipe(
+                finalize(() => this.submitting = false )
+            )
+            .subscribe(
             (data) => {
                 this.messageService.success(data.message);
             },

@@ -4,7 +4,7 @@ import BasePage from '../AppBasePage.component';
 import {VerifyCodeService} from '../../../core/services/verify-code.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {interval} from 'rxjs';
-import {take} from 'rxjs/operators';
+import {finalize, take} from 'rxjs/operators';
 import {UserService} from '../../../core/services/user.service';
 import {UniqueEmailValidator} from '../../validators/unique-email.validator';
 import {UniqueNameValidator} from '../../validators/unique-name.validator';
@@ -21,7 +21,7 @@ export class RegisterComponent extends BasePage {
     title = 'AcFun Comment Instrumentality Project（A站评论补全计划)-注册';
     timeOfResend = 0;
     sendingCode = false;
-    submitting = false;
+    private submitting = false;
 
     registerForm = new FormGroup({
         email: new FormControl('', {
@@ -47,7 +47,6 @@ export class RegisterComponent extends BasePage {
                     const password = control.parent && control.parent.get('password').value;
                     const confirmPassword = control.value;
                     return password === confirmPassword ? null : {notSame: true};
-
                 }
             ],
             updateOn: 'change',
@@ -79,20 +78,24 @@ export class RegisterComponent extends BasePage {
         }
 
         this.sendingCode = true;
-        this.verifyCodeService.sendRegisterCode(this.registerForm.value.email).subscribe(() => {
-            this.sendingCode = false;
-            interval(1000).pipe(take(60)).subscribe((x) => {
-                this.timeOfResend = 59 - x;
-            });
-        });
+        this.verifyCodeService.sendRegisterCode(this.registerForm.value.email)
+            .pipe(finalize(() => this.sendingCode = false))
+            .subscribe(
+                (data) => {
+                    this.messageService.success(data.message);
+                    this.timeOfResend = 60;
+                    this.sendingCode = false;
+                    interval(1000).pipe(take(60)).subscribe((x) => {
+                        this.timeOfResend --;
+                    });
+                },
+                (res) => this.messageService.error(res.error.message)
+            );
     }
 
     get verifyCodeButtonTip() {
         if (this.timeOfResend > 0) {
-            return `${this.timeOfResend}秒后可重发`;
-        }
-        if (this.sendingCode) {
-            return '发送中...';
+            return `${this.timeOfResend} 秒后可重发`;
         }
         return '发送验证码';
     }
@@ -120,7 +123,7 @@ export class RegisterComponent extends BasePage {
     onSubmit() {
         for (const i in this.registerForm.controls) {
             const control = this.registerForm.controls[i];
-            if (!control.errors) {
+            if (!control.dirty) {
                 control.markAsDirty();
                 control.updateValueAndValidity();
             }
@@ -137,13 +140,15 @@ export class RegisterComponent extends BasePage {
         if (this.registerForm.status !== 'VALID') {
             return;
         }
-
-        this.userService.register(this.registerForm.value).subscribe(
-            (data) => {
-                this.messageService.success(data.message);
-            },
-            (res) => this.messageService.error(res.error.message)
-        );
+        this.submitting = true;
+        this.userService.register(this.registerForm.value)
+            .pipe(finalize(() => this.submitting = false))
+            .subscribe(
+                (data) => {
+                    this.messageService.success(data.message);
+                },
+                (res) => this.messageService.error(res.error.message)
+            );
     }
 
 

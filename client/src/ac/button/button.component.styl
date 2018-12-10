@@ -37,3 +37,28 @@
         color #CCCCCC
         background #EEEEEE
         cursor not-allowed
+
+.container
+    height 100%
+    display flex
+    align-items center
+    justify-content center
+
+    &.loading
+        background rgba(255, 255, 255, 0.3)
+
+    .icon-box
+        display inline-block
+        margin-right 12px
+
+    .loading-icon
+        height 18px
+        width 18px
+        animation 0.7s linear 0s infinite loading-animation
+
+
+@keyframes loading-animation
+    from
+        transform rotateZ(0)
+    to
+        transform rotateZ(360deg)

@@ -17,6 +17,7 @@ export class ButtonComponent implements OnInit {
     private _size: ButtonSize = 'medium';
     private _type: ButtonType = 'primary';
     private _shrink = false;
+    private _loading = false;
 
     @Input('ac-width') width: number;
 
@@ -36,6 +37,18 @@ export class ButtonComponent implements OnInit {
     set shrink(shrink: boolean) {
         this._shrink = shrink;
         this.setClass();
+    }
+
+    @Input('ac-loading')
+    set loading(loading: boolean) {
+        this._loading = loading;
+    }
+
+    onClick(e: Event) {
+        if (this._loading) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
     }
 
     setClass() {
