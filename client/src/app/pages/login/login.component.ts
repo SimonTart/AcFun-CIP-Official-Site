@@ -40,8 +40,11 @@ export class LoginComponent extends BasePage {
             return;
         }
         for (const i in this.loginForm.controls) {
-            this.loginForm.controls[i].markAsDirty();
-            this.loginForm.controls[i].updateValueAndValidity();
+            const control = this.loginForm.controls[i];
+            if (!control.errors) {
+                control.markAsDirty();
+                control.updateValueAndValidity();
+            }
         }
 
         if (this.loginForm.status !== 'VALID') {

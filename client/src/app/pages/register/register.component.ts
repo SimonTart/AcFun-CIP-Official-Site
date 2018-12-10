@@ -97,7 +97,7 @@ export class RegisterComponent extends BasePage {
         return '发送验证码';
     }
 
-    onEmailBlur() {
+    checkEmail() {
         const emailControl = this.registerForm.get('email');
         if (emailControl.errors) {
             return;
@@ -107,7 +107,7 @@ export class RegisterComponent extends BasePage {
         );
     }
 
-    onNameBlur() {
+    checkName() {
         const nameControl = this.registerForm.get('name');
         if (nameControl.errors) {
             return;
@@ -119,8 +119,19 @@ export class RegisterComponent extends BasePage {
 
     onSubmit() {
         for (const i in this.registerForm.controls) {
-            this.registerForm.controls[i].markAsDirty();
-            this.registerForm.controls[i].updateValueAndValidity();
+            const control = this.registerForm.controls[i];
+            if (!control.errors) {
+                control.markAsDirty();
+                control.updateValueAndValidity();
+            }
+        }
+
+        if (!this.registerForm.get('email').errors) {
+            this.checkEmail();
+        }
+
+        if (!this.registerForm.get('name').errors) {
+            this.checkName();
         }
 
         if (this.registerForm.status !== 'VALID') {

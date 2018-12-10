@@ -7,7 +7,7 @@
                 ac-input
                 ac-size="large"
                 formControlName="email"
-                (blur)="onEmailBlur()"
+                (blur)="checkEmail()"
             />
             <ac-form-field-error *ngIf="registerForm.get('email').dirty">
                 <span *ngIf="registerForm.get('email').hasError('required')">请输入邮件</span>
@@ -45,7 +45,7 @@
                 ac-input
                 ac-size="large"
                 formControlName="name"
-                (blur)="onNameBlur()"
+                (blur)="checkName()"
             />
             <ac-form-field-error *ngIf="registerForm.get('name').dirty">
                 <span *ngIf="registerForm.get('name').hasError('required')">请输入用户名</span>

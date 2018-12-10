@@ -113,7 +113,7 @@ export class ForgetPasswordComponent extends BasePage {
         }
         for (const i in this.resetPasswordForm.controls) {
             const control = this.resetPasswordForm.controls[i];
-            if (!control.dirty) {
+            if (!control.errors) {
                 control.markAsDirty();
                 control.updateValueAndValidity();
             }
