@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ButtonComponent} from './button/button.component';
 import {InputComponent} from './input/input.component';
 import {FormFieldComponent} from './form-field/form-field.component';
@@ -18,7 +19,8 @@ import {MessageService} from './message/message.service';
         MessageContainerComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        BrowserAnimationsModule,
     ],
     exports: [
         ButtonComponent,

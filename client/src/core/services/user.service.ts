@@ -8,7 +8,7 @@ interface VerifyEmailData extends ResponseData {
 }
 
 interface VerifyNameData extends ResponseData {
-    isUsed: boolean;
+    used: boolean;
 }
 
 @Injectable({

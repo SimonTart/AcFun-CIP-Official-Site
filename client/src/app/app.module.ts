@@ -16,6 +16,7 @@ import {QueryCommentResultItemComponent} from './common/query-comment-result-ite
 import {QueryCommentResultCommentItemComponent} from './common/query-comment-result-comment-item/query-comment-result-comment-item.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpErrorInterceptor} from './interceptors/http-error.interceptor';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {HttpErrorInterceptor} from './interceptors/http-error.interceptor';
         AcModule,
         CoreModule,
         HttpClientModule,
+        BrowserAnimationsModule,
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true},

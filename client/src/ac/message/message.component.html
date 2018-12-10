@@ -1,6 +1,18 @@
-<div class="message-box">
-    <div class="message">
-        <div class="icon"></div>
+<div
+    class="message-box"
+    [@enterLeave]="message.state"
+>
+    <div
+        class="message"
+        [ngClass]="'message ' + message.type"
+    >
+        <div
+            class="icon"
+            [ngSwitch]="message.type"
+        >
+            <img *ngSwitchCase="'error'" src="assets/images/message/error.svg">
+            <img *ngSwitchCase="'success'" src="assets/images/message/success.svg">
+        </div>
         <div class="content">{{message.content}}</div>
     </div>
 </div>

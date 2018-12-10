@@ -49,6 +49,7 @@
             />
             <ac-form-field-error *ngIf="registerForm.get('name').dirty">
                 <span *ngIf="registerForm.get('name').hasError('required')">请输入用户名</span>
+                <span *ngIf="registerForm.get('name').hasError('used')">该用户名已被使用</span>
             </ac-form-field-error>
         </ac-form-field>
         <ac-form-field>

@@ -6,6 +6,7 @@ import {UserService} from '../../../core/services/user.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {interval} from 'rxjs';
 import {take} from 'rxjs/operators';
+import {MessageService} from '../../../ac/message/message.service';
 
 @Component({
     selector: 'app-forget-password',
@@ -51,6 +52,7 @@ export class ForgetPasswordComponent extends BasePage {
         public titleService: Title,
         private verifyCodeService: VerifyCodeService,
         private userService: UserService,
+        private messageService: MessageService,
     ) {
         super(titleService);
     }
@@ -121,9 +123,12 @@ export class ForgetPasswordComponent extends BasePage {
             return;
         }
 
-        this.userService.forgetPassword(this.resetPasswordForm.value).subscribe(() => {
-            console.log('重置成功');
-        });
+        this.userService.forgetPassword(this.resetPasswordForm.value).subscribe(
+            (data) => {
+                this.messageService.success(data.message);
+            },
+            (res) => this.messageService.error(res.error.message)
+        );
     }
 
 }

@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import { Message } from './message.component';
 
-
 @Component({
     selector: 'ac-message-container',
     templateUrl: './message-container.component.html',
@@ -12,5 +11,9 @@ export class MessageContainerComponent {
 
     createMessage(message: Message) {
         this.messages.push(message);
+    }
+
+    removeMessage(id: number) {
+        this.messages = this.messages.filter((message) => message.id !== id);
     }
 }

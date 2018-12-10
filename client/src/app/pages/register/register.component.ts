@@ -8,6 +8,7 @@ import {take} from 'rxjs/operators';
 import {UserService} from '../../../core/services/user.service';
 import {UniqueEmailValidator} from '../../validators/unique-email.validator';
 import {UniqueNameValidator} from '../../validators/unique-name.validator';
+import {MessageService} from '../../../ac/message/message.service';
 
 
 @Component({
@@ -59,6 +60,7 @@ export class RegisterComponent extends BasePage {
         private uniqueNameValidator: UniqueNameValidator,
         private verifyCodeService: VerifyCodeService,
         private userService: UserService,
+        private messageService: MessageService,
     ) {
         super(titleService);
     }
@@ -116,9 +118,6 @@ export class RegisterComponent extends BasePage {
     }
 
     onSubmit() {
-        if (this.submitting) {
-            return;
-        }
         for (const i in this.registerForm.controls) {
             this.registerForm.controls[i].markAsDirty();
             this.registerForm.controls[i].updateValueAndValidity();
@@ -128,9 +127,12 @@ export class RegisterComponent extends BasePage {
             return;
         }
 
-        this.userService.register(this.registerForm.value).subscribe(() => {
-            console.log('注册成功');
-        });
+        this.userService.register(this.registerForm.value).subscribe(
+            (data) => {
+                this.messageService.success(data.message);
+            },
+            (res) => this.messageService.error(res.error.message)
+        );
     }
 
 

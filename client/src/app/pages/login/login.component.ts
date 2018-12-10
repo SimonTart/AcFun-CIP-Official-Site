@@ -36,8 +36,6 @@ export class LoginComponent extends BasePage {
     }
 
     onSubmit() {
-        this.messageService.create({ type: 'test', content: '2333'})
-        return;
         if (this.submitting) {
             return;
         }
@@ -50,8 +48,11 @@ export class LoginComponent extends BasePage {
             return;
         }
 
-        this.userService.login(this.loginForm.value).subscribe((data) => {
-            console.log(data.message);
-        }, (res) => console.log(res.error.message));
+        this.userService.login(this.loginForm.value).subscribe(
+            (data) => {
+                this.messageService.success(data.message);
+            },
+            (res) => this.messageService.error(res.error.message)
+        );
     }
 }
