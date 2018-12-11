@@ -5,6 +5,7 @@ import {Title} from '@angular/platform-browser';
 import {UserService} from '../../../core/services/user.service';
 import {MessageService} from '../../../ac/message/message.service';
 import {finalize} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -32,6 +33,7 @@ export class LoginComponent extends BasePage {
         public titleService: Title,
         private userService: UserService,
         private messageService: MessageService,
+        private router: Router,
     ) {
         super(titleService);
     }
@@ -57,6 +59,7 @@ export class LoginComponent extends BasePage {
             .subscribe(
             (data) => {
                 this.messageService.success(data.message);
+                setTimeout(() => this.router.navigateByUrl('/browser-extension'), 2000);
             },
             (res) => this.messageService.error(res.error.message)
         );

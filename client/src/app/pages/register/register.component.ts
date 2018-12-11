@@ -9,6 +9,8 @@ import {UserService} from '../../../core/services/user.service';
 import {UniqueEmailValidator} from '../../validators/unique-email.validator';
 import {UniqueNameValidator} from '../../validators/unique-name.validator';
 import {MessageService} from '../../../ac/message/message.service';
+import {Router} from '@angular/router';
+import {confirmPasswordValidator} from '../../validators/confirm-password.validator';
 
 
 @Component({
@@ -37,17 +39,17 @@ export class RegisterComponent extends BasePage {
             updateOn: 'change',
         }),
         password: new FormControl('', {
-            validators: [Validators.required, Validators.minLength(8)],
+            validators: [
+                Validators.required,
+                Validators.minLength(8),
+                confirmPasswordValidator
+            ],
             updateOn: 'change',
         }),
         confirmPassword: new FormControl('', {
             validators: [
                 Validators.required,
-                (control: AbstractControl): { [key: string]: any } | null => {
-                    const password = control.parent && control.parent.get('password').value;
-                    const confirmPassword = control.value;
-                    return password === confirmPassword ? null : {notSame: true};
-                }
+                confirmPasswordValidator,
             ],
             updateOn: 'change',
         }),
@@ -60,6 +62,7 @@ export class RegisterComponent extends BasePage {
         private verifyCodeService: VerifyCodeService,
         private userService: UserService,
         private messageService: MessageService,
+        private router: Router
     ) {
         super(titleService);
     }
@@ -86,7 +89,7 @@ export class RegisterComponent extends BasePage {
                     this.timeOfResend = 60;
                     this.sendingCode = false;
                     interval(1000).pipe(take(60)).subscribe((x) => {
-                        this.timeOfResend --;
+                        this.timeOfResend--;
                     });
                 },
                 (res) => this.messageService.error(res.error.message)
@@ -146,6 +149,7 @@ export class RegisterComponent extends BasePage {
             .subscribe(
                 (data) => {
                     this.messageService.success(data.message);
+                    setTimeout(() => this.router.navigateByUrl('/login'), 2000);
                 },
                 (res) => this.messageService.error(res.error.message)
             );

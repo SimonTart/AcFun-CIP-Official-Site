@@ -3,10 +3,12 @@ import BasePage from '../AppBasePage.component';
 import {Title} from '@angular/platform-browser';
 import {VerifyCodeService} from '../../../core/services/verify-code.service';
 import {UserService} from '../../../core/services/user.service';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {interval} from 'rxjs';
 import {finalize, take} from 'rxjs/operators';
 import {MessageService} from '../../../ac/message/message.service';
+import {Router} from '@angular/router';
+import {confirmPasswordValidator} from '../../validators/confirm-password.validator';
 
 @Component({
     selector: 'app-forget-password',
@@ -29,18 +31,17 @@ export class ForgetPasswordComponent extends BasePage {
             updateOn: 'change',
         }),
         password: new FormControl('', {
-            validators: [Validators.required, Validators.minLength(8)],
+            validators: [
+                Validators.required,
+                Validators.minLength(8),
+                confirmPasswordValidator
+            ],
             updateOn: 'change',
         }),
         confirmPassword: new FormControl('', {
             validators: [
                 Validators.required,
-                (control: AbstractControl): { [key: string]: any } | null => {
-                    const password = control.parent && control.parent.get('password').value;
-                    const confirmPassword = control.value;
-                    return password === confirmPassword ? null : {notSame: true};
-
-                }
+                confirmPasswordValidator
             ],
             updateOn: 'change',
         }),
@@ -53,6 +54,7 @@ export class ForgetPasswordComponent extends BasePage {
         private verifyCodeService: VerifyCodeService,
         private userService: UserService,
         private messageService: MessageService,
+        private router: Router,
     ) {
         super(titleService);
     }
@@ -84,7 +86,7 @@ export class ForgetPasswordComponent extends BasePage {
                     this.sendingCode = false;
                     this.timeOfResend = 60;
                     interval(1000).pipe(take(60)).subscribe((x) => {
-                        this.timeOfResend --;
+                        this.timeOfResend--;
                     });
                 },
                 (res) => this.messageService.error(res.error.message)
@@ -130,6 +132,7 @@ export class ForgetPasswordComponent extends BasePage {
             .subscribe(
                 (data) => {
                     this.messageService.success(data.message);
+                    setTimeout(() => this.router.navigateByUrl('/login'), 2000);
                 },
                 (res) => this.messageService.error(res.error.message),
             );
