@@ -12,6 +12,7 @@ router.post('/api/user/forget-password', userControllers.forgetPassword);
 router.post('/api/user/modify-password', requireLogin, userControllers.modifyPassword);
 router.post('/api/user/verify-email', userControllers.verifyEmail);
 router.post('/api/user/verify-name', userControllers.verifyName);
+router.get('/api/user/account', userControllers.account);
 router.post('/api/verify-code/register', verifyCodeControllers.sendRegisterVerifyCode);
 router.post('/api/verify-code/forget-password', verifyCodeControllers.sendForgetPasswordVerifyCode);
 

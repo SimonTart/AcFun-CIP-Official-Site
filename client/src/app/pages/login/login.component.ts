@@ -59,9 +59,9 @@ export class LoginComponent extends BasePage {
             .subscribe(
             (data) => {
                 this.messageService.success(data.message);
-                setTimeout(() => this.router.navigateByUrl('/browser-extension'), 2000);
+                setTimeout(() => window.location.href = '/browser-extension', 2000);
             },
-            (res) => this.messageService.error(res.error.message)
+            (error) => this.messageService.error(error.message)
         );
     }
 }

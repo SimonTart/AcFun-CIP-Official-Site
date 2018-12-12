@@ -1,4 +1,6 @@
-import {Component} from '@angular/core';
+/// <reference path="../../../typing.d.ts"/>
+
+import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -10,10 +12,12 @@ export class NavComponent {
     navList = [
         {name: '插件下载', link: '/browser-extension'},
         {name: '评论查询', link: '/query-comment'},
-        {name: '登录/注册', link: '/login', activeReg: /\/(register|login|forget-password)/},
     ];
+
+    private isActiveLoginRegexp =  /\/(register|login|forget-password)/;
 
     constructor(public router: Router) {
     }
 
+    @Input() user: User;
 }

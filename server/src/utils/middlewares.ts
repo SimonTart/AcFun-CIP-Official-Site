@@ -1,8 +1,9 @@
 import db from '../db';
+import {RequireLoginError} from '../common/errors';
 
 export async function requireLogin(ctx, next) {
     if (!ctx.session.userId) {
-        ctx.throw(403, '无权限访问');
+        throw new RequireLoginError();
     }
     await next();
 }

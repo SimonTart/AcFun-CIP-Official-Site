@@ -8,4 +8,21 @@
     >
         <a [routerLink]="nav.link">{{nav.name}}</a>
     </li>
+    <li
+        *ngIf="!user.isLogin"
+        class="nav-list-item"
+        [ngClass]="{
+            active: isActiveLoginRegexp.test(router.url)
+        }"
+    >
+        <a routerLink="/login">登录/注册</a>
+    </li>
+    <li
+        *ngIf="user.isLogin"
+        class="nav-list-item"
+    >
+        <a href="javascript:void(0)">
+            {{user.name}}
+        </a>
+    </li>
 </ul>

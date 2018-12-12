@@ -8,6 +8,7 @@ import * as koaSessionStore from 'koa-session-knex-store';
 import router from './router';
 import db from './db';
 import {appendUser} from './utils/middlewares';
+import {STATUS_CODES} from '../../common/constant';
 
 const app = new koa();
 
@@ -19,12 +20,16 @@ app.use(async (ctx, next) => {
     try {
         await next();
     } catch (e) {
-        if (e.status) {
-            ctx.status = e.status;
-            ctx.body = {message: e.message};
+        if (e.statusCode) {
+            ctx.body = {
+                statusCode: e.statusCode,
+                message: e.message
+            };
         } else {
-            ctx.status = 500;
-            ctx.body = {message: '服务器错误'};
+            ctx.body = {
+                statusCode: STATUS_CODES.INTERNAL_ERROR,
+                message: '服务器错误'
+            };
         }
     }
 });

@@ -4,6 +4,8 @@ import * as dayjs from 'dayjs'
 import db from '../db';
 import {VERIFY_CODE_TYPES} from '../common/constant';
 import {sendRegisterMail, sendForgetPasswordMail} from '../utils/email';
+import {BadRequestError} from '../common/errors';
+import {STATUS_CODES} from '../../../common/constant';
 
 export async function sendRegisterVerifyCode(ctx, next) {
     const validatorSchema = Joi.object().keys({
@@ -11,7 +13,7 @@ export async function sendRegisterVerifyCode(ctx, next) {
     }).required();
     const {error: validatorError} = Joi.validate(ctx.request.body, validatorSchema, {allowUnknown: true});
     if (validatorError) {
-        ctx.throw(400, '参数错误');
+        throw new BadRequestError();
     }
 
 
@@ -40,6 +42,7 @@ export async function sendRegisterVerifyCode(ctx, next) {
 
     await sendRegisterMail(email, sendCode);
     ctx.body = {
+        statusCode: STATUS_CODES.SUCCESS,
         message: '验证码已发送',
     };
 }
@@ -50,13 +53,13 @@ export async function sendForgetPasswordVerifyCode(ctx, next) {
     }).required();
     const {error: validatorError} = Joi.validate(ctx.request.body, validatorSchema);
     if (validatorError) {
-        ctx.throw(400, '参数错误');
+        throw new BadRequestError();
     }
 
     const {email} = ctx.request.body;
     const existUser = await db.select().from('user').where({email});
     if (existUser.length === 0) {
-        ctx.throw(400, '该邮箱未注册');
+        throw new BadRequestError('该邮箱未注册');
     }
 
     let sendCode;
@@ -83,6 +86,7 @@ export async function sendForgetPasswordVerifyCode(ctx, next) {
 
     await sendForgetPasswordMail(email, sendCode);
     ctx.body = {
+        statusCode: STATUS_CODES.SUCCESS,
         message: '验证码已发送',
     };
 }

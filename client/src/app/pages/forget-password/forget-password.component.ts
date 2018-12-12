@@ -89,7 +89,7 @@ export class ForgetPasswordComponent extends BasePage {
                         this.timeOfResend--;
                     });
                 },
-                (res) => this.messageService.error(res.error.message)
+                (error) => this.messageService.error(error.message)
             );
     }
 
@@ -134,7 +134,7 @@ export class ForgetPasswordComponent extends BasePage {
                     this.messageService.success(data.message);
                     setTimeout(() => this.router.navigateByUrl('/login'), 2000);
                 },
-                (res) => this.messageService.error(res.error.message),
+                (error) => this.messageService.error(error.message),
             );
     }
 

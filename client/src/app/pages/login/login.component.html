@@ -7,6 +7,7 @@
                 autocomplete="email"
                 ac-input
                 ac-size="large"
+                formControlName="email"
             />
             <ac-form-field-error *ngIf="loginForm.get('email').dirty">
                 <span *ngIf="loginForm.get('email').hasError('required')">请输入邮件</span>
