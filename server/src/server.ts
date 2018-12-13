@@ -6,20 +6,21 @@ import * as koaLogger from 'koa-logger';
 import * as koaSessionStore from 'koa-session-knex-store';
 
 import router from './router';
-import db from './db';
+import osDb from './osDb';
 import {appendUser} from './utils/middlewares';
 import {STATUS_CODES} from '../../common/constant';
 
 const app = new koa();
 
 
-const store = koaSessionStore(db, {createtable: true});
+const store = koaSessionStore(osDb, {createtable: true});
 
 
 app.use(async (ctx, next) => {
     try {
         await next();
     } catch (e) {
+        console.error(e);
         if (e.statusCode) {
             ctx.body = {
                 statusCode: e.statusCode,

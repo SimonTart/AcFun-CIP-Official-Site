@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 import * as nanoid from 'nanoid';
 import * as dayjs from 'dayjs'
-import db from '../db';
+import osDb from '../osDb';
 import {VERIFY_CODE_TYPES} from '../common/constant';
 import {sendRegisterMail, sendForgetPasswordMail} from '../utils/email';
 import {BadRequestError} from '../common/errors';
@@ -19,7 +19,7 @@ export async function sendRegisterVerifyCode(ctx, next) {
 
     const {email} = ctx.request.body;
     let sendCode;
-    const existVerifyCode = await db
+    const existVerifyCode = await osDb
         .select().from('verify_code')
         .where({
             email,
@@ -30,7 +30,7 @@ export async function sendRegisterVerifyCode(ctx, next) {
 
     if (existVerifyCode.length === 0) {
         const code = nanoid().slice(0, 7);
-        await db('verify_code').insert({
+        await osDb('verify_code').insert({
             email,
             code,
             type: VERIFY_CODE_TYPES.REGISTER,
@@ -57,13 +57,13 @@ export async function sendForgetPasswordVerifyCode(ctx, next) {
     }
 
     const {email} = ctx.request.body;
-    const existUser = await db.select().from('user').where({email});
+    const existUser = await osDb.select().from('user').where({email});
     if (existUser.length === 0) {
         throw new BadRequestError('该邮箱未注册');
     }
 
     let sendCode;
-    const existVerifyCode = await db
+    const existVerifyCode = await osDb
         .select().from('verify_code')
         .where({
             email,
@@ -74,7 +74,7 @@ export async function sendForgetPasswordVerifyCode(ctx, next) {
 
     if (existVerifyCode.length === 0) {
         const code = nanoid().slice(0, 7);
-        await db('verify_code').insert({
+        await osDb('verify_code').insert({
             email,
             code,
             type: VERIFY_CODE_TYPES.FORGET_PASSWORD,

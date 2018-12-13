@@ -10,9 +10,8 @@ import {UserService} from '../core/services/user.service';
 })
 export class AppComponent {
     title = 'client';
-    user: User = { isLogin: false };
 
     constructor(private userService: UserService) {
-        this.userService.get().subscribe((data) => this.user = data.user);
+        this.userService.get();
     }
 }

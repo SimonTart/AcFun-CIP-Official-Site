@@ -1,4 +1,4 @@
-import db from '../db';
+import osDb from '../osDb';
 import {RequireLoginError} from '../common/errors';
 
 export async function requireLogin(ctx, next) {
@@ -10,7 +10,7 @@ export async function requireLogin(ctx, next) {
 
 export async function appendUser(ctx, next) {
     if (ctx.session.userId) {
-        const user = await db.select().from('user')
+        const user = await osDb.select().from('user')
             .where('id', ctx.session.userId)
             .first();
         if (user) {

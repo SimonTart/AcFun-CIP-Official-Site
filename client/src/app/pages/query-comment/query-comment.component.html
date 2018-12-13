@@ -8,6 +8,7 @@
         <div class="search-block">
             <div class="search-box">
                 <input
+                    #userIdInput
                     class="user-id-input"
                     ac-input
                     ac-size="large"
@@ -16,10 +17,11 @@
                 <button
                     class="submit-button"
                     ac-button
+                    [ac-loading]="searching"
                     [ac-shrink]="true"
                     [ac-width]="120"
                     ac-size="large"
-                    (click)="toggle()"
+                    (click)="onSearch(userIdInput)"
                 >
                     查询
                 </button>
@@ -28,15 +30,15 @@
                 <a href="" target="_blank">如何获取用户ID?</a>
             </div>
         </div>
-        <div class="search-result">
-            <div class="result-info">查询到在12个内容下面留言，共45条评论</div>
+        <div class="search-result" *ngIf="hasResult">
+            <div class="result-info">查询到在{{result.contentCount}}个内容下面留言，共{{result.commentCount}}条评论</div>
             <div class="search-result-content">
-                <cip-query-comment-result-item></cip-query-comment-result-item>
-                <cip-query-comment-result-item></cip-query-comment-result-item>
-                <cip-query-comment-result-item></cip-query-comment-result-item>
-                <cip-query-comment-result-item></cip-query-comment-result-item>
-                <cip-query-comment-result-item></cip-query-comment-result-item>
-                <cip-query-comment-result-item></cip-query-comment-result-item>
+                <cip-query-comment-result-item
+                    *ngFor="let content of contents; trackBy: id"
+                    [content]="content"
+                    [comments]="contentIdToComments[content.id] || []"
+                >
+                </cip-query-comment-result-item>
             </div>
         </div>
     </div>

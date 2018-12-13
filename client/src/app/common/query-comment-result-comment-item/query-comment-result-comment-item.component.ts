@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'cip-query-comment-result-comment-item',
@@ -6,4 +6,5 @@ import {Component} from '@angular/core';
     styleUrls: ['./query-comment-result-comment-item.component.styl']
 })
 export class QueryCommentResultCommentItemComponent {
+    @Input() comment: Comment;
 }

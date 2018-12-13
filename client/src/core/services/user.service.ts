@@ -15,6 +15,10 @@ interface AccountData extends ResponseData {
     user: User;
 }
 
+interface IsLoginData extends ResponseData {
+    isLogin: boolean;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -23,8 +27,14 @@ export class UserService {
     constructor(private http: HttpClient) {
     }
 
+    user: (User | {}) = {};
+
+    isLogin() {
+        return this.http.get<IsLoginData>('/api/user/is-login');
+    }
+
     get() {
-        return this.http.get<AccountData>('/api/user/account');
+        return this.http.get<AccountData>('/api/user/account').subscribe((data) => this.user = data.user);
     }
 
     register(user) {

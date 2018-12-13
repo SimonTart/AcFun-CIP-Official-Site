@@ -1,13 +1,17 @@
-declare interface Config {
-    knex: {
-        client: string,
-        connection: {
-            host : string,
-            user : string,
-            password : string,
-            database : string
-        }
-    },
+interface KnexConfig {
+    client: string,
+    connection: {
+        host : string,
+        user : string,
+        password : string,
+        database : string
+    }
+}
+
+
+interface Config {
+    osKnex: KnexConfig,
+    obKnex: KnexConfig,
     encryptPasswordSalt: string,
     appKeys: Array<string>,
     email: {

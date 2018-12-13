@@ -1,5 +1,5 @@
 import * as Joi from 'joi';
-import db from '../db';
+import osDb from '../osDb';
 import {encryptPassword} from '../utils/utils';
 import {VERIFY_CODE_TYPES} from '../common/constant';
 import * as dayjs from 'dayjs';
@@ -10,7 +10,7 @@ import {STATUS_CODES} from '../../../common/constant';
 export async function register(ctx, next) {
     const validatorSchema = Joi.object().keys({
         email: Joi.string().email().required(),
-        name: Joi.string().required().required(),
+        name: Joi.string().required(),
         password: Joi.string().min(8).required(),
         verifyCode: Joi.string().required(),
     }).required();
@@ -20,12 +20,12 @@ export async function register(ctx, next) {
     }
     const {email, name, verifyCode} = ctx.request.body;
 
-    const existUser = await db.select().from('user').where('email', email).orWhere('name', name).first();
+    const existUser = await osDb.select().from('user').where('email', email).orWhere('name', name).first();
     if (existUser) {
         throw new BadRequestError('邮箱或用户名重复');
     }
 
-    const existVerifyCode = await db.select().first()
+    const existVerifyCode = await osDb.select().first()
         .from('verify_code')
         .where({
             email,
@@ -40,7 +40,7 @@ export async function register(ctx, next) {
     }
 
     const password = encryptPassword(ctx.request.body.password);
-    await db.transaction((trx) => {
+    await osDb.transaction((trx) => {
         return trx('user').insert({
             email,
             name,
@@ -72,7 +72,7 @@ export async function login(ctx, next) {
 
     const {email} = ctx.request.body;
     const password = encryptPassword(ctx.request.body.password);
-    const user = await db.select().from('user').where({
+    const user = await osDb.select().from('user').where({
         email,
         password,
     }).first();
@@ -101,7 +101,7 @@ export async function verifyEmail(ctx, next) {
         throw new BadRequestError();
     }
     const {email} = ctx.request.body;
-    const existEmail = await db.select().from('user').where({email}).first();
+    const existEmail = await osDb.select().from('user').where({email}).first();
 
     if (existEmail) {
         ctx.body = {
@@ -130,7 +130,7 @@ export async function verifyName(ctx, next) {
         throw new BadRequestError();
     }
     const {name} = ctx.request.body;
-    const existName = await db.select().from('user').where({name}).first();
+    const existName = await osDb.select().from('user').where({name}).first();
 
     if (existName) {
         ctx.body = {
@@ -161,12 +161,12 @@ export async function forgetPassword(ctx, next) {
     }
     const {email, name, verifyCode} = ctx.request.body;
 
-    const existUser = await db.select().from('user').where('email', email).first();
+    const existUser = await osDb.select().from('user').where('email', email).first();
     if (!existUser) {
         throw new BadRequestError('该邮箱未注册');
     }
 
-    const existVerifyCode = await db.select().first()
+    const existVerifyCode = await osDb.select().first()
         .from('verify_code')
         .where({
             email,
@@ -181,7 +181,7 @@ export async function forgetPassword(ctx, next) {
     }
 
     const password = encryptPassword(ctx.request.body.password);
-    await db.transaction((trx) => {
+    await osDb.transaction((trx) => {
         return trx('user').update({
             password,
         })
@@ -214,7 +214,7 @@ export async function modifyPassword(ctx, next) {
         oldPassword,
         newPassword,
     } = ctx.request.body;
-    const existUser = await db.select().from('user').where({
+    const existUser = await osDb.select().from('user').where({
         id: ctx.state.user.id,
         password: encryptPassword(oldPassword),
     }).first();
@@ -223,7 +223,7 @@ export async function modifyPassword(ctx, next) {
         throw new BadRequestError('密码错误');
     }
 
-    await db.update({
+    await osDb.update({
         password: encryptPassword(newPassword),
     })
         .where({
@@ -239,7 +239,7 @@ export async function modifyPassword(ctx, next) {
 
 export async function account(ctx, next) {
     if (ctx.state.user) {
-        const user = await db.select('id', 'email', 'name').from('user').where('id', ctx.state.user.id).first();
+        const user = await osDb.select('id', 'email', 'name').from('user').where('id', ctx.state.user.id).first();
         ctx.body = {
             statusCode: STATUS_CODES.SUCCESS,
             user: {
@@ -253,6 +253,22 @@ export async function account(ctx, next) {
             user: {
                 isLogin: false,
             }
+        }
+    }
+}
+
+export async function isLogin(ctx, next) {
+    if (ctx.state.user) {
+        ctx.body = {
+            statusCode: STATUS_CODES.SUCCESS,
+            isLogin: true,
+            message: '已登录',
+        }
+    } else {
+        ctx.body = {
+            statusCode: STATUS_CODES.SUCCESS,
+            isLogin: false,
+            message: '未登录',
         }
     }
 }

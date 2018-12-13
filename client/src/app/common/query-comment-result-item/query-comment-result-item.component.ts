@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'cip-query-comment-result-item',
@@ -7,10 +7,19 @@ import {Component} from '@angular/core';
 })
 export class QueryCommentResultItemComponent {
 
-    private open: boolean = false;
+    private open = false;
+
+    @Input() content: Content;
+
+    @Input() comments: Array<Comment>;
 
     toggle() {
         this.open = !this.open;
     }
 
+    get link() {
+        return this.content.contentType === 'article' ?
+            `http://www.acfun.cn/a/ac${this.content.id}`
+            : `http://www.acfun.cn/v/ac${this.content.id}}`;
+    }
 }
