@@ -7,7 +7,7 @@ import {Component, Input} from '@angular/core';
 })
 export class QueryCommentResultItemComponent {
 
-    private open = false;
+    open = false;
 
     @Input() content: Content;
 
@@ -15,6 +15,10 @@ export class QueryCommentResultItemComponent {
 
     toggle() {
         this.open = !this.open;
+    }
+
+    tackCommentBy(index, comment) {
+        return comment.id;
     }
 
     get link() {

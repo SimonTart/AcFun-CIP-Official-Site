@@ -7,7 +7,11 @@ import { Message } from './message.component';
     styleUrls: ['./message-container.component.styl'],
 })
 export class MessageContainerComponent {
-    private messages: Array<Message> = [];
+    messages: Array<Message> = [];
+
+    trackMessage(index, message) {
+        return message.id;
+    }
 
     createMessage(message: Message) {
         this.messages.push(message);

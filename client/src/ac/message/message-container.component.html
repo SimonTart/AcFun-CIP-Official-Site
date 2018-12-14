@@ -1,6 +1,6 @@
 <div class="message-container">
     <ac-message
-        *ngFor="let message of messages; trackBy: id"
+        *ngFor="let message of messages; trackBy: trackMessage"
         [message]="message"
         (remove)="removeMessage($event)"
     ></ac-message>

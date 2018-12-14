@@ -17,7 +17,7 @@ export class ButtonComponent implements OnInit {
     private _size: ButtonSize = 'medium';
     private _type: ButtonType = 'primary';
     private _shrink = false;
-    private _loading = false;
+    _loading = false;
 
     @Input('ac-width') width: number;
 

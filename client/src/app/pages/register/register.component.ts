@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import BasePage from '../AppBasePage.component';
+import {AppBasePageComponent} from '../AppBasePage.component';
 import {VerifyCodeService} from '../../../core/services/verify-code.service';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {interval} from 'rxjs';
@@ -18,12 +18,12 @@ import {confirmPasswordValidator} from '../../validators/confirm-password.valida
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.styl']
 })
-export class RegisterComponent extends BasePage {
+export class RegisterComponent extends AppBasePageComponent {
     backgorundImageUrl = 'assets/images/pages/register_login.jpg';
     title = 'AcFun Comment Instrumentality Project（A站评论补全计划)-注册';
     timeOfResend = 0;
     sendingCode = false;
-    private submitting = false;
+    submitting = false;
 
     registerForm = new FormGroup({
         email: new FormControl('', {

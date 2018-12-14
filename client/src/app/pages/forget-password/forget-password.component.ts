@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import BasePage from '../AppBasePage.component';
 import {Title} from '@angular/platform-browser';
 import {VerifyCodeService} from '../../../core/services/verify-code.service';
 import {UserService} from '../../../core/services/user.service';
@@ -9,13 +8,14 @@ import {finalize, take} from 'rxjs/operators';
 import {MessageService} from '../../../ac/message/message.service';
 import {Router} from '@angular/router';
 import {confirmPasswordValidator} from '../../validators/confirm-password.validator';
+import {AppBasePageComponent} from '../AppBasePage.component';
 
 @Component({
     selector: 'app-forget-password',
     templateUrl: './forget-password.component.html',
     styleUrls: ['./forget-password.component.styl']
 })
-export class ForgetPasswordComponent extends BasePage {
+export class ForgetPasswordComponent extends AppBasePageComponent {
     backgorundImageUrl = 'assets/images/pages/register_login.jpg';
     title = 'A站评论补全计划-忘记密码（AcFun Comment Instrumentality Project Forget Password）';
     timeOfResend = 0;
@@ -47,7 +47,7 @@ export class ForgetPasswordComponent extends BasePage {
         }),
     });
 
-    private submitting = false;
+    submitting = false;
 
     constructor(
         public titleService: Title,

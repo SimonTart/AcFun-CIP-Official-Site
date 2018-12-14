@@ -34,7 +34,7 @@
             <div class="result-info">查询到在{{result.contentCount}}个内容下面留言，共{{result.commentCount}}条评论</div>
             <div class="search-result-content">
                 <cip-query-comment-result-item
-                    *ngFor="let content of contents; trackBy: id"
+                    *ngFor="let content of contents; trackBy: trackContentBy"
                     [content]="content"
                     [comments]="contentIdToComments[content.id] || []"
                 >

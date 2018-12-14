@@ -11,7 +11,7 @@ import {UserService} from '../core/services/user.service';
 export class AppComponent {
     title = 'client';
 
-    constructor(private userService: UserService) {
+    constructor(public userService: UserService) {
         this.userService.get();
     }
 }

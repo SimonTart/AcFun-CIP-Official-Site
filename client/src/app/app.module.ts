@@ -17,6 +17,7 @@ import {QueryCommentResultCommentItemComponent} from './common/query-comment-res
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpErrorInterceptor} from './interceptors/http-error.interceptor';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppBasePageComponent} from './pages/AppBasePage.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         QueryCommentComponent,
         QueryCommentResultItemComponent,
         QueryCommentResultCommentItemComponent,
+        AppBasePageComponent,
     ],
     imports: [
         ReactiveFormsModule,

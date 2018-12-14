@@ -43,7 +43,7 @@ export interface Message {
     ]
 })
 export class MessageComponent implements OnInit {
-    @Input() private message: Message;
+    @Input() message: Message;
     @Output() private remove =  new EventEmitter<number>();
 
     private showTimer: number;

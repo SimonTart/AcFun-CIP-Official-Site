@@ -4,7 +4,7 @@ import {Title} from '@angular/platform-browser';
 @Component({
     template: '',
 })
-export default class AppBasePageComponent {
+export class AppBasePageComponent {
     constructor(public titleService: Title) {
     }
 

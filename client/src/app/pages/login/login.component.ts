@@ -1,18 +1,18 @@
 import {Component} from '@angular/core';
-import BasePage from '../AppBasePage.component';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {UserService} from '../../../core/services/user.service';
 import {MessageService} from '../../../ac/message/message.service';
 import {finalize} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {AppBasePageComponent} from '../AppBasePage.component';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.styl']
 })
-export class LoginComponent extends BasePage {
+export class LoginComponent extends AppBasePageComponent {
     backgorundImageUrl = 'assets/images/pages/register_login.jpg';
     title = 'A站评论补全计划-登录(AcFun Comment Instrumentality Project Login)';
 
@@ -27,7 +27,7 @@ export class LoginComponent extends BasePage {
         }),
     });
 
-    private submitting = false;
+    submitting = false;
 
     constructor(
         public titleService: Title,

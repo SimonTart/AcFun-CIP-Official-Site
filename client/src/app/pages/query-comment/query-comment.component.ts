@@ -1,19 +1,19 @@
 /// <reference path="../../../typing.d.ts"/>
 import {Component, OnInit} from '@angular/core';
-import BasePage from '../AppBasePage.component';
 import {UserService} from '../../../core/services/user.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {MessageService} from '../../../ac/message/message.service';
 import {CommentService, QueryCommentData} from '../../../core/services/comment.service';
 import {finalize} from 'rxjs/operators';
+import {AppBasePageComponent} from '../AppBasePage.component';
 
 @Component({
     selector: 'app-query-comment',
     templateUrl: './query-comment.component.html',
     styleUrls: ['./query-comment.component.styl']
 })
-export class QueryCommentComponent extends BasePage implements OnInit {
+export class QueryCommentComponent extends AppBasePageComponent implements OnInit {
     backgorundImageUrl = 'assets/images/pages/query_comment.jpg';
     title = 'A站评论补全计划-评论查询(AcFun Comment Instrumentality Project Query Comment)';
 
@@ -27,14 +27,14 @@ export class QueryCommentComponent extends BasePage implements OnInit {
         super(titleService);
     }
 
-    private hasResult = false;
-    private searching = false;
-    private loadingMore = false;
-    private result: QueryCommentData | {} = {};
-    private contentIdToComments: { any: Comment } | {} = {};
-    private contents: Array<Content> = [];
-    private pageNumber: number;
-    private userId: number;
+    hasResult = false;
+    searching = false;
+    loadingMore = false;
+    result: QueryCommentData;
+    contentIdToComments: { any: Array<Comment> };
+    contents: Array<Content> = [];
+    pageNumber: number;
+    userId: number;
 
     ngOnInit(): void {
         this.userService.isLogin().subscribe((data) => {
@@ -45,12 +45,18 @@ export class QueryCommentComponent extends BasePage implements OnInit {
         });
     }
 
+    trackContentBy(index, content) {
+        return content.id;
+    }
+
     processResult(result: QueryCommentData): void {
+        const contentIdToComments = this.contentIdToComments || {};
         for (const comment of result.comments) {
-            const existComments = this.contentIdToComments[comment.contentId] || [];
+            const existComments = contentIdToComments[comment.contentId] || [];
             existComments.push(comment);
-            this.contentIdToComments[comment.contentId] = existComments;
+            contentIdToComments[comment.contentId] = existComments;
         }
+        this.contentIdToComments = contentIdToComments as { any: Array<Comment> };
         this.contents.push(...result.contents);
     }
 
@@ -64,7 +70,7 @@ export class QueryCommentComponent extends BasePage implements OnInit {
 
         this.searching = true;
         this.userId = userId;
-        this.queryComment({ userId, pageNumber: 1}, () => this.searching = false);
+        this.queryComment({userId, pageNumber: 1}, () => this.searching = false);
     }
 
     loadMore() {
@@ -72,7 +78,7 @@ export class QueryCommentComponent extends BasePage implements OnInit {
             return;
         }
         this.loadingMore = true;
-        this.queryComment({ userId: this.userId, pageNumber: this.pageNumber + 1}, () => this.loadingMore = false);
+        this.queryComment({userId: this.userId, pageNumber: this.pageNumber + 1}, () => this.loadingMore = false);
     }
 
     queryComment({userId, pageNumber}, finalizeFn) {
@@ -86,7 +92,7 @@ export class QueryCommentComponent extends BasePage implements OnInit {
             .subscribe(
                 (data) => {
                     if (params.pageNumber === 1) {
-                        this.contentIdToComments = {};
+                        this.contentIdToComments = null;
                         this.contents = [];
                     }
                     this.pageNumber = pageNumber;
