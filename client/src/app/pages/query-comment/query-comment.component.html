@@ -30,7 +30,7 @@
                 <a href="" target="_blank">如何获取用户ID?</a>
             </div>
         </div>
-        <div class="search-result" *ngIf="hasResult">
+        <div class="search-result" *ngIf="result.contentCount > 0">
             <div class="result-info">查询到在{{result.contentCount}}个内容下面留言，共{{result.commentCount}}条评论</div>
             <div class="search-result-content">
                 <cip-query-comment-result-item
@@ -40,6 +40,9 @@
                 >
                 </cip-query-comment-result-item>
             </div>
+        </div>
+        <div class="no-result" *ngIf="result.contentCount === 0">
+            暂无此用户记录
         </div>
     </div>
 </div>

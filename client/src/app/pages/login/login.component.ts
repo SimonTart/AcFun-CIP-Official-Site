@@ -59,7 +59,8 @@ export class LoginComponent extends BasePage {
             .subscribe(
             (data) => {
                 this.messageService.success(data.message);
-                setTimeout(() => window.location.href = '/browser-extension', 2000);
+                this.userService.get();
+                setTimeout(() => this.router.navigateByUrl('/browser-extension'), 2000);
             },
             (error) => this.messageService.error(error.message)
         );

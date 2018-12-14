@@ -21,7 +21,7 @@ export async function query(ctx, next) {
     } = ctx.request.body;
 
     const contentCount = await obDb
-        .count({contentCount: 'content_id'})
+        .countDistinct({contentCount: 'content_id'})
         .from('comments')
         .where({user_id: userId})
         .then((rows) => rows[0].contentCount);
@@ -37,6 +37,7 @@ export async function query(ctx, next) {
         .select('content_id')
         .from('comments').where({user_id: userId})
         .groupBy('content_id')
+        .orderBy('content_id', 'desc')
         .limit(pageSize)
         .offset((pageNumber - 1) * pageSize)
         .then(rows => rows.map((r) => r.content_id))

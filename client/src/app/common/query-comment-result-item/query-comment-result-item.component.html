@@ -6,10 +6,12 @@
 >
     <div
         class="content-item-header"
-        title="eqweqw"
-        (click)="toggle()"
     >
-        <div class="content-item-header-main">
+        <div
+            class="content-item-header-main"
+            [title]="content.title"
+            (click)="toggle()"
+        >
             <div class="content-item-header-main-title" [innerHTML]="content.title"></div>
             <img src="assets/images/pages/arrow.svg" class="arrow-icon">
         </div>
