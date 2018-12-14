@@ -26,7 +26,7 @@
                     查询
                 </button>
             </div>
-            <div class="search-tip">
+            <div class="search-tip" *ngIf="false">
                 <a href="" target="_blank">如何获取用户ID?</a>
             </div>
         </div>
@@ -39,6 +39,13 @@
                     [comments]="contentIdToComments[content.id] || []"
                 >
                 </cip-query-comment-result-item>
+                <div
+                    class="load-more-comments"
+                    *ngIf="result.contentCount > contents.length"
+                    (click)="loadMore()"
+                >
+                    {{loadingMore ? '加载中...' : '加载更多'}}
+                </div>
             </div>
         </div>
         <div class="no-result" *ngIf="result.contentCount === 0">

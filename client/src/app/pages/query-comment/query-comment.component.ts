@@ -29,9 +29,12 @@ export class QueryCommentComponent extends BasePage implements OnInit {
 
     private hasResult = false;
     private searching = false;
+    private loadingMore = false;
     private result: QueryCommentData | {} = {};
     private contentIdToComments: { any: Comment } | {} = {};
     private contents: Array<Content> = [];
+    private pageNumber: number;
+    private userId: number;
 
     ngOnInit(): void {
         this.userService.isLogin().subscribe((data) => {
@@ -60,20 +63,33 @@ export class QueryCommentComponent extends BasePage implements OnInit {
         }
 
         this.searching = true;
+        this.userId = userId;
+        this.queryComment({ userId, pageNumber: 1}, () => this.searching = false);
+    }
+
+    loadMore() {
+        if (this.loadingMore) {
+            return;
+        }
+        this.loadingMore = true;
+        this.queryComment({ userId: this.userId, pageNumber: this.pageNumber + 1}, () => this.loadingMore = false);
+    }
+
+    queryComment({userId, pageNumber}, finalizeFn) {
         const params = {
             pageSize: 20,
-            pageNumber: 1,
+            pageNumber,
             userId,
         };
-
-        this.commentService.query(params)
-            .pipe(finalize(() => this.searching = false))
+        return this.commentService.query(params)
+            .pipe(finalize(() => finalizeFn()))
             .subscribe(
                 (data) => {
                     if (params.pageNumber === 1) {
                         this.contentIdToComments = {};
                         this.contents = [];
                     }
+                    this.pageNumber = pageNumber;
                     this.result = data;
                     this.processResult(data);
                     this.hasResult = true;

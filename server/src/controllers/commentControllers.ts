@@ -61,6 +61,7 @@ export async function query(ctx, next) {
             contentType: 'content_type',
             publishedAt: 'published_at',
         })
+        .orderBy('published_at', 'desc')
         .from('contents')
         .whereIn('id', contentIds);
 

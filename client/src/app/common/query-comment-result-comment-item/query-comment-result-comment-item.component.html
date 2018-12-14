@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="container">
         <div class="circle-icon"></div>
-        <div class="header">{{comment.postDate | date: 'yyyy-MM-dd h:mm:ss'}}</div>
+        <div class="header">{{comment.postDate | date: 'yyyy-MM-dd hh:mm:ss'}}</div>
         <div class="content" [innerHTML]="comment.content"></div>
     </div>
 </div>
