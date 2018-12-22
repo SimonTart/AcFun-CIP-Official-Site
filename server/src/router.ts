@@ -8,10 +8,9 @@ import {requireLogin} from './utils/middlewares';
 const router = new Router();
 
 
-router.get(/(regist|login|query-comment|browser-extension)/, async (ctx) => {
+router.get(/^\/(regist|login|query-comment|browser-extension)$/, async (ctx) => {
     await ctx.render('index');
 });
-router.get(/^/)
 
 router.post('/api/user/register', userControllers.register);
 router.post('/api/user/login', userControllers.login);
@@ -28,5 +27,9 @@ router.post('/api/verify-code/forget-password', verifyCodeControllers.sendForget
 
 router.post('/api/comment/query', requireLogin, commentControllers.query);
 
-router.get('*', async (ctx) => ctx.redirect('/browser-extension'))
+router.get('*', async (ctx) => {
+    // console.log(ctx._matchedRoute)
+
+    ctx.redirect('/browser-extension');
+})
 export default router;
