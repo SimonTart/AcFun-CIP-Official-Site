@@ -5,10 +5,10 @@ import developmentConfig from './development';
 import productionConfig from './production';
 
 let config: Config;
-const APP_ENV = process.env.APP_ENV;
+const NODE_ENV = process.env.NODE_ENV;
 
-if (APP_ENV === 'production') {
-    // config = productionConfig;
+if (NODE_ENV === 'production') {
+    config = productionConfig;
 } else {
     config = developmentConfig;
 }

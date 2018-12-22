@@ -1,24 +1,16 @@
 /// <reference path="../typing.d.ts" />
-
+const knexConfig = require('../../knexfile');
 import * as process from "process";
 
 const config = {
-    osKnex: {
-        client: 'mysql',
-        connection: {
-            host: process.env.OS_HOST,
-            user: process.env.OS_USER,
-            password: process.env.OS_PASSWORD,
-            database: process.env.OS_DATABASE
-        }
-    },
+    osKnex: knexConfig.production,
     obKnex: {
         client: 'mysql',
         connection: {
-            host: process.env.OB_HOST,
-            user: process.env.OB_USER,
-            password: process.env.OB_PASSWORD,
-            database: process.env.OB_DATABASE
+            host: '127.0.0.1',
+            user: 'root',
+            password: process.env.DB_PASSPORT,
+            database: 'eva_acfun'
         },
     },
     encryptPasswordSalt: 'acfun-cip-os',
