@@ -4,7 +4,7 @@ import {encryptPassword} from '../utils/utils';
 import {VERIFY_CODE_TYPES} from '../common/constant';
 import * as dayjs from 'dayjs';
 import {BadRequestError, RequireLoginError} from '../common/errors';
-import {STATUS_CODES} from '../../../common/constant';
+import {STATUS_CODES} from '../common/constant';
 
 // 用户注册
 export async function register(ctx, next) {

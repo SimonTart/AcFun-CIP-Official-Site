@@ -1,4 +1,4 @@
-import {STATUS_CODES} from '../../../common/constant';
+import {STATUS_CODES} from '../common/constant';
 
 export class RequireLoginError extends Error {
     statusCode = STATUS_CODES.NOT_LOGIN;

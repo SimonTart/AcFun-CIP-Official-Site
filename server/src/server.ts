@@ -12,7 +12,7 @@ import * as render from 'koa-ejs';
 import router from './router';
 import osDb from './osDb';
 import {appendUser} from './utils/middlewares';
-import {STATUS_CODES} from '../../common/constant';
+import {STATUS_CODES} from './common/constant';
 
 const app = new koa();
 

@@ -2,7 +2,7 @@ import {filter} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpResponse} from '@angular/common/http';
-import {STATUS_CODES} from '../../../../common/constant';
+import {STATUS_CODES} from '../../../common/constant';
 
 @Injectable()
 export class HttpPipe {

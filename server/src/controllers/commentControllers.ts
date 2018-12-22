@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 import {BadRequestError} from '../common/errors';
 import obDb from '../obDb';
-import {STATUS_CODES} from '../../../common/constant';
+import {STATUS_CODES} from '../common/constant';
 
 export async function query(ctx, next) {
     const validatorSchema = Joi.object().keys({

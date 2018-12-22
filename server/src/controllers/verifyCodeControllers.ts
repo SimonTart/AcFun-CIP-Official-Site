@@ -5,7 +5,7 @@ import osDb from '../osDb';
 import {VERIFY_CODE_TYPES} from '../common/constant';
 import {sendRegisterMail, sendForgetPasswordMail} from '../utils/email';
 import {BadRequestError} from '../common/errors';
-import {STATUS_CODES} from '../../../common/constant';
+import {STATUS_CODES} from '../common/constant';
 
 export async function sendRegisterVerifyCode(ctx, next) {
     const validatorSchema = Joi.object().keys({

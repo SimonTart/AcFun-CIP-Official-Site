@@ -2,7 +2,7 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,
 import {Injectable} from '@angular/core';
 import {catchError, filter, map} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
-import {STATUS_CODES} from '../../../../common/constant';
+import {STATUS_CODES} from '../../../common/constant';
 import {Router} from '@angular/router';
 
 
