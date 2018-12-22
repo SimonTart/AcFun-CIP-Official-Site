@@ -24,3 +24,5 @@ interface Content {
     contentType: string;
     publishedAt: string;
 }
+
+declare var require: any;

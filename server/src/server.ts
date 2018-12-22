@@ -4,6 +4,10 @@ import * as session from 'koa-session';
 import * as koaJson from 'koa-json';
 import * as koaLogger from 'koa-logger';
 import * as koaSessionStore from 'koa-session-knex-store';
+import * as serve from 'koa-static';
+import * as path from 'path';
+import * as render from 'koa-ejs';
+
 
 import router from './router';
 import osDb from './osDb';
@@ -35,7 +39,13 @@ app.use(async (ctx, next) => {
     }
 });
 
+render(app, {
+    root: path.join(__dirname, 'public'),
+    layout: false,
+    viewExt: 'html',
+});
 app.use(koaLogger());
+app.use(serve(path.resolve(__dirname, 'public'), {maxAge: 365 * 24 * 60 * 60}))
 
 app.keys = ['acfun-cip-os'];
 app.use(session({
