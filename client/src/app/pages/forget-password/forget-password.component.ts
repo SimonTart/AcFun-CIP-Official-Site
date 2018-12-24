@@ -16,7 +16,7 @@ import {AppBasePageComponent} from '../AppBasePage.component';
     styleUrls: ['./forget-password.component.styl']
 })
 export class ForgetPasswordComponent extends AppBasePageComponent {
-    backgorundImageUrl = 'assets/images/pages/register_login.jpg';
+    backgorundImageUrl = require('../../assets/images/pages/register_login.jpg');
     title = 'A站评论补全计划-忘记密码（AcFun Comment Instrumentality Project Forget Password）';
     timeOfResend = 0;
     sendingCode = false;

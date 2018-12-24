@@ -15,3 +15,6 @@ A站评论补全计划官网
 [AcFun-CIP-Extension](https://github.com/SimonTart/AcFun-CIP-Extension)
 
 [AcFun-CIP-Official-Site](https://github.com/SimonTart/AcFun-CIP-Official-Site)
+
+## 其他
+修改了`@angular-devkit`中的`build-angular/src/angular-cli-files/models/webpack-config/common.js`，让`file-loader`支持mpv、crx资源的加载。

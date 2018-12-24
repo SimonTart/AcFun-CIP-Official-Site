@@ -13,6 +13,9 @@ export class QueryCommentResultItemComponent {
 
     @Input() comments: Array<Comment>;
 
+    arrowSvg = require('../../assets/images/pages/arrow.svg');
+    linkSvg = require('../../assets/images/pages/link.svg')
+
     toggle() {
         this.open = !this.open;
     }

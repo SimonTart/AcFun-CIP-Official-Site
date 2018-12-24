@@ -4,22 +4,22 @@
         <p class="desc">AcFun Comment Instrumentality Project</p>
         <div class="downloads">
             <a class="download-button" href="https://addons.mozilla.org/en-US/firefox/addon/acfun-cip/" target="_blank">
-                <img src="assets/images/pages/firefox.svg" alt="Firefox" class="download-icon">
+                <img [src]="firefoxSvg" alt="Firefox" class="download-icon">
                 <span>Firefox下载</span>
             </a>
             <a href="https://chrome.google.com/webstore/detail/completed-acfun/mhpjihcolfmanjipbiileobmpljepjod" target="_blank" class="download-button">
-                <img src="assets/images/pages/chrome.svg" alt="Chrome" class="download-icon">
+                <img [src]="chromeSvg" alt="Chrome" class="download-icon">
                 <span>Chrome下载</span>
             </a>
         </div>
         <div class="tips">
             <div class="chrome-tip">
-                <a href="assets/crx/acfun_cip_v2.1.0.crx" download target="_blank">离线下载</a>
+                <a [href]="crxSvg" download target="_blank">离线下载</a>
                 <a href="https://www.williamlong.info/archives/3160.html" target="_blank">离线安装教程</a>
             </div>
         </div>
     </section>
     <section class="video-block">
-        <video #myVideo src="assets/videos/magic.mp4?v=2.0.0" loop="true" muted="true" controls preload="auto" [volume]="0"></video>
+        <video #myVideo [src]="video" loop="true" muted="true" controls preload="auto" [volume]="0"></video>
     </section>
 </div>

@@ -14,7 +14,7 @@ import {AppBasePageComponent} from '../AppBasePage.component';
     styleUrls: ['./query-comment.component.styl']
 })
 export class QueryCommentComponent extends AppBasePageComponent implements OnInit {
-    backgorundImageUrl = 'assets/images/pages/query_comment.jpg';
+    backgorundImageUrl = require('../../assets/images/pages/query_comment.jpg');
     title = 'A站评论补全计划-评论查询(AcFun Comment Instrumentality Project Query Comment)';
 
     constructor(

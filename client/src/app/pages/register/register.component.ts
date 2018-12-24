@@ -19,7 +19,7 @@ import {confirmPasswordValidator} from '../../validators/confirm-password.valida
     styleUrls: ['./register.component.styl']
 })
 export class RegisterComponent extends AppBasePageComponent {
-    backgorundImageUrl = 'assets/images/pages/register_login.jpg';
+    backgorundImageUrl = require('../../assets/images/pages/register_login.jpg');
     title = 'AcFun Comment Instrumentality Project（A站评论补全计划)-注册';
     timeOfResend = 0;
     sendingCode = false;

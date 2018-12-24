@@ -13,7 +13,7 @@ import {AppBasePageComponent} from '../AppBasePage.component';
     styleUrls: ['./login.component.styl']
 })
 export class LoginComponent extends AppBasePageComponent {
-    backgorundImageUrl = 'assets/images/pages/register_login.jpg';
+    backgorundImageUrl = require('../../assets/images/pages/register_login.jpg');
     title = 'A站评论补全计划-登录(AcFun Comment Instrumentality Project Login)';
 
     loginForm = new FormGroup({

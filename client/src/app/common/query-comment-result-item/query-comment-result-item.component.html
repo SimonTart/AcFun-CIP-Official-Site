@@ -13,11 +13,11 @@
             (click)="toggle()"
         >
             <div class="content-item-header-main-title" [innerHTML]="content.title"></div>
-            <img src="assets/images/pages/arrow.svg" class="arrow-icon">
+            <img [src]="arrowSvg" class="arrow-icon">
         </div>
         <div class="content-item-header-more">
             <a [href]="link" class="source-link" target="_blank">
-                <img src="assets/images/pages/link.svg">
+                <img src="">
                 <span>查看原文</span>
             </a>
             <div class="content-publish-date">{{content.publishedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
