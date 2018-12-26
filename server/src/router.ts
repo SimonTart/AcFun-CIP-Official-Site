@@ -30,6 +30,6 @@ router.post('/api/comment/query', requireLogin, commentControllers.query);
 router.get('*', async (ctx) => {
     // console.log(ctx._matchedRoute)
 
-    ctx.redirect('/browser-extension');
+    ctx.redirect(`/browser-extension?t=${(new Date()).getTime()}`);
 })
 export default router;

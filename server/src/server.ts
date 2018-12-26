@@ -45,7 +45,13 @@ render(app, {
     viewExt: 'html',
 });
 app.use(koaLogger());
-app.use(serve(path.resolve(__dirname, 'public'), {maxage: 365 * 24 * 60 * 60 * 1000}))
+app.use(serve(
+    path.resolve(__dirname, 'public'),
+    {
+        maxage: 365 * 24 * 60 * 60 * 1000,
+        index: 'none.html', //设置为没有
+    }
+));
 
 app.keys = ['acfun-cip-os'];
 app.use(session({
