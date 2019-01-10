@@ -1,3 +1,15 @@
+<div
+    class="research"
+    [ngClass]="{
+        'close': !openResearch
+    }"
+>
+    <div class="research-content">
+        最近A站更新了评论区导致插件不可用，并且A站新版评论区默认不会显示被删除的评论。再加上个人精力有限，所以我考虑是否继续更新此插件。我做了一个投票，如果觉得应该更新的人多，我就继续更新，否则就不更新了。
+        <a href="https://www.wjx.cn/jq/33685354.aspx" target="_blank">前去投票</a>
+    </div>
+    <div class="close-research" (click)="closeResearch()">关闭</div>
+</div>
 <div class="content">
     <section class="desc-block">
         <h1 class="title">AcFun CIP</h1>

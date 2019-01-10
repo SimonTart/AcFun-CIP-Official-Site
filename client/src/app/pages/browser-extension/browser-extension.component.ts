@@ -14,4 +14,10 @@ export class BrowserExtensionComponent extends AppBasePageComponent {
     video = require('../../assets/videos/magic.mp4');
 
     title = 'A站评论补全计划插件（AcFun Comment Instrumentality Project Extension）';
+
+    openResearch = true;
+
+    closeResearch() {
+        this.openResearch = false;
+    }
 }
